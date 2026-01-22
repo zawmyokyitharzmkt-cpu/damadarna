@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ဘုရားရှိခိုး</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pyidaungsu:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* အခြေခံ အရောင်နှင့် Design သတ်မှတ်ချက်များ */
+        :root {
+            --primary-color: #f8f9fa;
+            --secondary-color: #343a40;
+            --accent-color: #ff9800;
+            --text-dark: #212121;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --radius: 20px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Pyidaungsu', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--primary-color);
+            color: var(--text-dark);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: filter 0.2s ease; /* Brightness အတွက် */
+        }
+
+        /* Header UI */
+        header, .sub-header {
+            background-color: var(--white);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            z-index: 100;
+        }
+
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .logo { width: 35px; height: auto; border-radius: 4px; }
+        .app-title { font-size: 1.2rem; font-weight: bold; color: var(--accent-color); }
+
+        .btn-icon {
+            background: none; border: none; font-size: 24px;
+            cursor: pointer; color: var(--secondary-color);
+        }
+
+        /* Menu Dropdown */
+        .menu-dropdown {
+            position: absolute;
+            top: 65px; right: 15px;
+            background: var(--white);
+            box-shadow: var(--shadow);
+            border-radius: 12px;
+            width: 200px;
+            display: none;
+            flex-direction: column;
+            z-index: 200;
+            overflow: hidden;
+            animation: fadeInDown 0.3s ease;
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .menu-item {
+            padding: 12px 20px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .menu-item:last-child { border-bottom: none; }
+        .menu-item:active { background-color: #f1f1f1; }
+
+        /* ListView & Animation */
+        .content-container {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .list-card {
+            background: var(--white);
+            margin-bottom: 12px;
+            padding: 18px;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            cursor: pointer;
+            animation: listFadeIn 0.5s ease backwards;
+            transition: var(--transition);
+        }
+        .list-card:active { transform: scale(0.97); background: #fafafa; }
+        .list-card i { color: var(--accent-color); font-size: 1.2rem; }
+
+        @keyframes listFadeIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Detail Page */
+        #detail-page {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--white);
+            z-index: 300;
+            display: none;
+            flex-direction: column;
+        }
+
+        .detail-header {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-body {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            line-height: 1.8;
+            text-align: center;
+            white-space: pre-line;
+        }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            padding: 15px;
+            display: flex;
+            justify-content: space-around;
+            background: var(--white);
+            border-top: 1px solid #eee;
+        }
+        .nav-btn {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            min-width: 80px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* Brightness & Font Size Dialogs */
+        .dialog-overlay {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.3);
+            display: none;
+            justify-content: center;
+            align-items: flex-end;
+            z-index: 400;
+        }
+        .dialog-box {
+            background: var(--white);
+            width: 100%;
+            max-width: 500px;
+            padding: 30px 20px;
+            border-radius: 25px 25px 0 0;
+            text-align: center;
+            animation: slideUp 0.3s ease;
+        }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+        input[type="range"] {
+            width: 100%;
+            margin: 20px 0;
+            accent-color: var(--accent-color);
+        }
+
+        .fav-active { color: #f44336 !important; }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <header id="main-header">
+        <div class="header-left">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Buddhist_flag.svg/2560px-Buddhist_flag.svg.png" alt="logo" class="logo">
+            <h1 class="app-title">ဘုရားရှိခိုး</h1>
+        </div>
+        <button class="btn-icon" onclick="toggleMenu()">☰</button>
+    </header>
+
+    <div id="fav-header" class="sub-header hidden">
+        <div class="header-left">
+            <button class="btn-icon" onclick="exitFavMode()">←</button>
+            <h1 class="app-title">ကိုယ့်အကြိုက်များ</h1>
+        </div>
+    </div>
+
+    <div class="menu-dropdown" id="dropdown-menu">
+        <div class="menu-item" onclick="openBrightnessDialog()">💡 Brightness</div>
+        <div class="menu-item" onclick="showFavorites()">⭐ ကိုယ့်အကြိုက်</div>
+        <div class="menu-item" onclick="aboutApp()">ℹ️ App အကြောင်း</div>
+        <div class="menu-item" onclick="sendFeedback()">📧 အကြံပြုချက်ပို့ရန်</div>
+    </div>
+
+    <main class="content-container" id="list-container"></main>
+
+    <div id="detail-page">
+        <div class="detail-header">
+            <h3 id="dt-title" style="flex:1; font-size: 1rem;">ခေါင်းစဉ်</h3>
+            <div style="display:flex; gap:20px;">
+                <button class="btn-icon" id="fav-toggle-btn" onclick="toggleFav()">🤍</button>
+                <button class="btn-icon" onclick="openFontDialog()">A+</button>
+            </div>
+        </div>
+        <div class="detail-body" id="dt-body"></div>
+        <div class="bottom-nav">
+            <button class="nav-btn" onclick="navigateContent(-1)">Prev</button>
+            <button class="nav-btn" onclick="closeDetail()">Home</button>
+            <button class="nav-btn" onclick="navigateContent(1)">Next</button>
+        </div>
+    </div>
+
+    <div class="dialog-overlay" id="dialog-overlay" onclick="closeDialogs()">
+        <div class="dialog-box" onclick="event.stopPropagation()">
+            <h4 id="dialog-title">ချိန်ညှိရန်</h4>
+            <input type="range" id="dialog-range" step="1">
+            <button class="nav-btn" style="width:100%" onclick="closeDialogs()">ပိတ်မည်</button>
+        </div>
+    </div>
+
+    <script>
+        /** * ၁။ Data Handling
+         * တရားတော်များကို JavaScript Object အနေဖြင့် သိမ်းဆည်းထားခြင်း
+         */
+        const dhammaData = [
+            { id: 0, title: "ရှိခိုးဦးချကန်တော့နည်း", body: "နမော တဿ ဘဂဝတော အရဟတော သမ္မာသမ္ဗုဒ္ဓဿ...\nဘုရားရှိခိုးခြင်း၊ ဦးချခြင်း ကန်တော့ခြင်းနည်းလမ်းများ..." },
+            { id: 1, title: "အပယ်ဖျက်", body: "အပါယ် ၄ ပါးမှ ကင်းဝေးစေသော ဆုတောင်းဂါထာတော်များ...\nငရဲ၊ တိရစ္ဆာန်၊ ပြိတ္တာ၊ အသူရကာယ်မှ လွတ်ကင်းရပါလို၏။" },
+            { id: 2, title: "မိမိကိုယ်ကို မေတ္တာပို့", body: "အဟံ သုခိတော ဟောမိ၊ နိဒ္ဒုက္ခော ဟောမိ၊ အဗျာပဇ္ဈော ဟောမိ၊ အနီဃော ဟောမိ..." },
+            { id: 3, title: "ဩကာသကန်တော့်ချိုး", body: "ဩကာသ ဩကာသ ဩကာသ၊ ကာယကံ ဝစီကံ မနောကံ သဗ္ဗဒေါသ ခပ်သိမ်းသော အပြစ်တို့ကို ပျောက်ပါစေခြင်း အကျိုးငှာ..." },
+            { id: 4, title: "ငါးပါးသီလတောင်ခံခြင်း", body: "အဟံ ဘန္တေ တိသရဏေန သဟ ပဉ္စသီလံ ဓမ္မံ ယာစာမိ၊ အနုဂ္ဂဟံ ကတွာ သီလံ ဒေထ မေ ဘန္တေ။" },
+            { id: 5, title: "သရဏဂုံဆောက်တည်ခြင်း", body: "ဗုဒ္ဓံ သရဏံ ဂစ္ဆာမိ၊ ဓမ္မံ သရဏံ ဂစ္ဆာမိ၊ သံဃံ သရဏံ ဂစ္ဆာမိ။" },
+            { id: 6, title: "ငါးပါးသီလ", body: "၁။ ပါဏာတိပါတာ ဝေရမဏိ သိက္ခာပဒံ သမာဒိယာမိ။\n၂။ အဒိန္နာဒါနာ ဝေရမဏိ သိက္ခာပဒံ သမာဒိယာမိ..." },
+            { id: 7, title: "ဘုရားဂုဏ်တော်", body: "ဣတိပိသော ဘဂဝါ အရဟံ သမ္မာသမ္ဗုဒ္ဓေါ ဝိဇ္ဇာစရဏသမ္ပန္နော သုဂတော လောကဝိဒူ..." },
+            { id: 8, title: "တရားဂုဏ်တော်", body: "သွာက္ခာတော ဘဂဝတာ ဓမ္မော သန္ဒိဋ္ဌိကော အကာလိကော ဧဟိပဿိကော..." },
+            { id: 9, title: "သံဃာဂုဏ်တော်", body: "သုပ္ပဋိပန္နော ဘဂဝတော သာဝကသံဃော၊ ဥဇုပ္ပဋိပန္နော ဘဂဝတော သာဝကသံဃော..." },
+            { id: 10, title: "နတ်ပင့်", body: "သမန္တာ စက္ကဝါဠေသု အတြာဂစ္ဆန္တု ဒေဝတာ၊ သဒ္ဓမ္မံ မုနိရာဇဿ သုဏန္တု သဂ္ဂမောက္ခဒံ။" },
+            { id: 11, title: "မေတ္တာသုတ်", body: "ယဿာနုဘာဝတော ယက္ခာ၊ နေဝ ဒဿေန္တိ ဘီသနံ။ ယဥှိ စေဝါနုယုဉ္ဇန္တော၊ ရတ္တိန္ဒိဝ မတန္ဒိတော။" },
+            { id: 12, title: "ခွင့်တောင်း", body: "တရားဟော တရားနာ ခွင့်တောင်းခြင်းဆိုင်ရာ ဂါထာများ..." },
+            { id: 13, title: "တရားနာဖိတ်", body: "ဓမ္မဿဝနကာလော အယံ ဘဒ္ဒန္တ၊ ဓမ္မဿဝနကာလော အယံ ဘဒ္ဒန္တ။" },
+            { id: 14, title: "ဖယ်ရှား", body: "ဘေးဥပဒ်အန္တရာယ်များ ဖယ်ရှားခြင်း ဂါထာတော်..." },
+            { id: 15, title: "အဓိဌာန်ဝင် စုံပေါက်/စုံပွင့်", body: "စုံပေါက် စုံပွင့် အဓိဌာန်ဝင်ခြင်းဆိုင်ရာ လမ်းညွှန်ချက်များ..." },
+            { id: 16, title: "ပြန်လည်ဖိတ်ကြား", body: "နတ်ဗြဟ္မာများကို ပြန်လည်ဖိတ်ကြားခြင်း ဂါထာ..." },
+            { id: 17, title: "ယောဆရာတော်ဘုရားကြီး သစ္စာပြုဆုတောင်း", body: "ယောဆရာတော်ဘုရားကြီး၏ သစ္စာပြု ဆုတောင်းဂါထာတော် အပြည့်အစုံ..." },
+            { id: 18, title: "နတ်ပို့", body: "ဧတ္တာဝတာ စ အမှေဟိ သမ္ဘတံ ပုညသမ္ပဒံ၊ သဗ္ဗေ ဒေဝါ အနုမောဒန္တု သဗ္ဗသမ္ပတ္တိသိဒ္ဓိယာ။" },
+            { id: 19, title: "ကိုးနဝင်း", body: "ကိုးနဝင်း ပုတီးစိပ်နည်းနှင့် လမ်းညွှန်ချက်များ..." }
+        ];
+
+        let currentActiveId = 0;
+        let favorites = JSON.parse(localStorage.getItem('favs')) || [];
+
+        /** ၂။ UI Logic */
+        function renderList(items = dhammaData) {
+            const container = document.getElementById('list-container');
+            container.innerHTML = '';
+            items.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'list-card';
+                card.style.animationDelay = (index * 0.05) + 's';
+                card.onclick = () => openDetail(item.id);
+                card.innerHTML = `<span>📖</span><span>${item.title}</span>`;
+                container.appendChild(card);
+            });
+        }
+
+        function openDetail(id) {
+            currentActiveId = id;
+            const item = dhammaData.find(d => d.id === id);
+            document.getElementById('dt-title').innerText = item.title;
+            document.getElementById('dt-body').innerText = item.body;
+            document.getElementById('detail-page').style.display = 'flex';
+            updateFavUI();
+            document.getElementById('dt-body').scrollTop = 0;
+        }
+
+        function closeDetail() {
+            document.getElementById('detail-page').style.display = 'none';
+        }
+
+        function navigateContent(dir) {
+            let nextId = currentActiveId + dir;
+            if (nextId >= 0 && nextId < dhammaData.length) {
+                openDetail(nextId);
+            }
+        }
+
+        /** ၃။ Brightness & Font Size Logic */
+        function openBrightnessDialog() {
+            toggleMenu();
+            const overlay = document.getElementById('dialog-overlay');
+            const range = document.getElementById('dialog-range');
+            document.getElementById('dialog-title').innerText = "အလင်းအမှောင်ချိန်ရန်";
+            overlay.style.display = 'flex';
+            range.min = 30; range.max = 100;
+            range.oninput = (e) => document.body.style.filter = `brightness(${e.target.value}%)`;
+        }
+
+        function openFontDialog() {
+            const overlay = document.getElementById('dialog-overlay');
+            const range = document.getElementById('dialog-range');
+            document.getElementById('dialog-title').innerText = "စာလုံးအရွယ်အစားချိန်ရန်";
+            overlay.style.display = 'flex';
+            range.min = 16; range.max = 40;
+            range.oninput = (e) => document.getElementById('dt-body').style.fontSize = e.target.value + 'px';
+        }
+
+        function closeDialogs() {
+            document.getElementById('dialog-overlay').style.display = 'none';
+        }
+
+        /** ၄။ Favorite & Menu Logic */
+        function toggleMenu() {
+            const menu = document.getElementById('dropdown-menu');
+            menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function toggleFav() {
+            if (favorites.includes(currentActiveId)) {
+                favorites = favorites.filter(id => id !== currentActiveId);
+            } else {
+                favorites.push(currentActiveId);
+            }
+            localStorage.setItem('favs', JSON.stringify(favorites));
+            updateFavUI();
+        }
+
+        function updateFavUI() {
+            const btn = document.getElementById('fav-toggle-btn');
+            btn.innerText = favorites.includes(currentActiveId) ? "❤️" : "🤍";
+            btn.classList.toggle('fav-active', favorites.includes(currentActiveId));
+        }
+
+        function showFavorites() {
+            toggleMenu();
+            const favItems = dhammaData.filter(d => favorites.includes(d.id));
+            if (favItems.length === 0) return alert("ကိုယ့်အကြိုက် မှတ်ထားတာ မရှိသေးပါ။");
+            
+            renderList(favItems);
+            document.getElementById('main-header').classList.add('hidden');
+            document.getElementById('fav-header').classList.remove('hidden');
+        }
+
+        function exitFavMode() {
+            renderList(dhammaData);
+            document.getElementById('main-header').classList.remove('hidden');
+            document.getElementById('fav-header').classList.add('hidden');
+        }
+
+        function sendFeedback() {
+            window.location.href = "mailto:zawmyokyithar.zmkt@gmail.com?subject=Dhamma App Feedback";
+            toggleMenu();
+        }
+
+        function aboutApp() {
+            alert("ဘုရားရှိခိုး Web App\nဗားရှင်း ၁.၀\nမြန်မာဘာသာတရားတော်များကို Offline ဖတ်ရှုနိုင်ရန် တည်ဆောက်ထားပါသည်။");
+            toggleMenu();
+        }
+
+        // Init App
+        window.onload = () => renderList();
+        // ပိတ်လိုက်ရင် menu ပိတ်ဖို့
+        window.onclick = (e) => {
+            if (!e.target.closest('.btn-icon') && !e.target.closest('.menu-dropdown')) {
+                document.getElementById('dropdown-menu').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
