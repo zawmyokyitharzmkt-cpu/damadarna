@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ဓမ္မဒါန ဘုရားရှိခိုး</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* CSS Variables */
+    :root {
+      --cream: #FDF8F3;
+      --cream-dark: #F5EDE4;
+      --white: #FFFFFF;
+      --red: #C41E3A;
+      --red-dark: #A01830;
+      --red-light: #FFE8EC;
+      --green: #2E7D32;
+      --green-light: #E8F5E9;
+      --gold: #D4A853;
+      --gray: #666666;
+      --gray-light: #999999;
+      --gray-dark: #333333;
+      --shadow: 0 4px 20px rgba(0,0,0,0.08);
+      --shadow-strong: 0 8px 32px rgba(0,0,0,0.12);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Noto Sans Myanmar', sans-serif;
+      background: var(--cream);
+      min-height: 100vh;
+      padding-bottom: 90px;
+      overflow-x: hidden;
+    }
+
+    /* AppBar */
+    .appbar {
+      background: var(--white);
+      padding: 12px 16px;
+      margin: 12px;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 12px;
+      z-index: 100;
+    }
+
+    .appbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .buddha-logo {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--gold) 0%, #B8923A 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .appbar-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--gray-dark);
+    }
+
+    .appbar-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: var(--cream);
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray);
+      transition: all 0.2s;
+    }
+
+    .icon-btn:active {
+      transform: scale(0.95);
+      background: var(--cream-dark);
+    }
+
+    /* Cards */
+    .card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 20px;
+      margin: 0 12px 16px;
+      box-shadow: var(--shadow);
+    }
+
+    /* Progress Card */
+    .progress-card {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .circular-progress {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      flex-shrink: 0;
+    }
+
+    .circular-progress svg {
+      transform: rotate(-90deg);
+      width: 100px;
+      height: 100px;
+    }
+
+    .circular-progress .bg {
+      fill: none;
+      stroke: var(--cream);
+      stroke-width: 8;
+    }
+
+    .circular-progress .progress {
+      fill: none;
+      stroke: var(--red);
+      stroke-width: 8;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.5s ease;
+    }
+
+    .progress-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--red);
+    }
+
+    .progress-info {
+      flex: 1;
+    }
+
+    .progress-info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      font-size: 13px;
+      color: var(--gray);
+      border-bottom: 1px dashed var(--cream-dark);
+    }
+
+    .progress-info-row:last-child {
+      border-bottom: none;
+    }
+
+    .progress-info-row span:last-child {
+      font-weight: 600;
+      color: var(--gray-dark);
+    }
+
+    .date-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .date-row svg {
+      width: 14px;
+      height: 14px;
+      color: var(--red);
+    }
+
+    .edit-btn {
+      background: var(--red-light);
+      border: none;
+      padding: 6px 12px;
+      border-radius: 8px;
+      color: var(--red);
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Today Card */
+    .today-card {
+      text-align: center;
+    }
+
+    .today-inner-card {
+      background: var(--cream);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .today-badge {
+      display: inline-block;
+      background: var(--red);
+      color: white;
+      padding: 6px 20px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .gatha-info {
+      margin-bottom: 12px;
+    }
+
+    .gatha-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gray-dark);
+      margin-bottom: 4px;
+    }
+
+    .gatha-count {
+      font-size: 14px;
+      color: var(--gray);
+    }
+
+    .day-badges {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .day-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 50px;
+      background: var(--white);
+      color: var(--gray);
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+    }
+
+    .day-badge.active {
+      background: var(--red);
+      color: white;
+    }
+
+    .day-badge.completed {
+      background: var(--green);
+      color: white;
+    }
+
+    /* Step Indicators */
+    .step-indicators {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 0;
+      margin-bottom: 16px;
+    }
+
+    .step-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--cream);
+      color: var(--white);
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      position: relative;
+    }
+
+    .step-circle.active {
+      background: var(--green);
+      color: white;
+    }
+
+    .step-circle.current {
+      background: var(--red);
+      color: white;
+      box-shadow: 0 0 0 3px var(--red-light);
+    }
+
+    /* Counter Section */
+    .counter-section {
+      padding-top: 16px;
+      border-top: 1px dashed var(--cream-dark);
+    }
+
+    .counter-title {
+      font-size: 14px;
+      color: var(--gray);
+      margin-bottom: 16px;
+    }
+
+    .counter-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .counter-btn {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--red) 0%, var(--red-dark) 100%);
+      border: none;
+      box-shadow: 0 8px 24px rgba(196, 30, 58, 0.4);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .counter-btn::before {
+      content: '';
+      position: absolute;
+      top: 10%;
+      left: 15%;
+      width: 30%;
+      height: 20%;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      filter: blur(8px);
+    }
+
+    .counter-btn:active {
+      transform: scale(0.95);
+      box-shadow: 0 4px 12px rgba(196, 30, 58, 0.4);
+    }
+
+    .counter-value {
+      font-size: 42px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .reset-btn {
+      background: var(--cream);
+      border: none;
+      padding: 10px 24px;
+      border-radius: 12px;
+      color: var(--gray);
+      font-size: 14px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .reset-btn:active {
+      background: var(--cream-dark);
+    }
+
+    /* Gatha Section Title */
+    .section-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--gray-dark);
+      padding: 16px 16px 12px;
+    }
+
+    /* Gatha Grid */
+    .gatha-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding: 0 12px 16px;
+    }
+
+    .gatha-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 14px 10px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .gatha-card:active {
+      transform: scale(0.97);
+    }
+
+    .gatha-card.today {
+      border: 2px solid var(--red);
+      background: var(--red-light);
+    }
+
+    .gatha-card.vegetarian {
+      border: 2px solid var(--green);
+    }
+
+    .gatha-card-day {
+      font-size: 11px;
+      color: var(--gray);
+      margin-bottom: 4px;
+    }
+
+    .gatha-card-num {
+      width: 24px;
+      height: 24px;
+      background: var(--cream);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gray-dark);
+      margin: 0 auto 6px;
+    }
+
+    .gatha-card.today .gatha-card-num {
+      background: var(--red);
+      color: white;
+    }
+
+    .gatha-card-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--gray-dark);
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+
+    .gatha-card-count {
+      font-size: 10px;
+      color: var(--gray-light);
+    }
+
+    .gatha-card-date {
+      font-size: 9px;
+      color: var(--gray-light);
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+    }
+
+    .vegetarian-text {
+      font-size: 10px;
+      color: var(--green);
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      background: var(--white);
+      border-radius: 24px;
+      padding: 8px 16px;
+      box-shadow: var(--shadow-strong);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 12px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-radius: 16px;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .nav-item.active {
+      background: var(--red-light);
+    }
+
+    .nav-item.active .nav-icon {
+      color: var(--red);
+    }
+
+    .nav-item.active .nav-label {
+      color: var(--red);
+    }
+
+    .nav-icon {
+      width: 24px;
+      height: 24px;
+      color: var(--gray);
+      transition: all 0.3s;
+    }
+
+    .nav-label {
+      font-size: 11px;
+      color: var(--gray);
+      font-family: inherit;
+      transition: all 0.3s;
+    }
+
+    /* Screens */
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    /* Dialog Overlay */
+    .dialog-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 20px;
+    }
+
+    .dialog-overlay.show {
+      display: flex;
+    }
+
+    .dialog {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 24px;
+      width: 100%;
+      max-width: 340px;
+      animation: dialogIn 0.3s ease;
+    }
+
+    @keyframes dialogIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .dialog-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gray-dark);
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .dialog-content {
+      font-size: 14px;
+      color: var(--gray);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .dialog-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .dialog-btn {
+      flex: 1;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .dialog-btn.primary {
+      background: var(--red);
+      color: white;
+    }
+
+    .dialog-btn.secondary {
+      background: var(--cream);
+      color: var(--gray-dark);
+    }
+
+    .dialog-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* Calendar */
+    .calendar-input {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid var(--cream-dark);
+      border-radius: 12px;
+      font-size: 16px;
+      font-family: inherit;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .calendar-input:focus {
+      outline: none;
+      border-color: var(--red);
+    }
+
+    /* Adhithan Screen */
+    .adhithan-content {
+      padding: 20px 16px;
+    }
+
+    .adhithan-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gray-dark);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .adhithan-text {
+      font-size: 15px;
+      color: var(--gray);
+      line-height: 2;
+      text-align: justify;
+      margin-bottom: 24px;
+    }
+
+    .adhithan-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .adhithan-btn {
+      padding: 16px 24px;
+      border: none;
+      border-radius: 16px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      background: var(--red);
+      color: white;
+      transition: all 0.2s;
+    }
+
+    .adhithan-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Prayer List Screen */
+    .prayer-list {
+      padding: 20px 12px;
+    }
+
+    .prayer-list-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--gray-dark);
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .prayer-item {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 18px 20px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.2s;
+    }
+
+    .prayer-item:active {
+      transform: scale(0.98);
+    }
+
+    .prayer-item-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--gray-dark);
+    }
+
+    .prayer-item-arrow {
+      color: var(--gray-light);
+    }
+
+    /* Content Screen */
+    .content-screen {
+      padding: 20px 12px;
+    }
+
+    .content-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .back-btn {
+      width: 40px;
+      height: 40px;
+      border: none;
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gray-dark);
+    }
+
+    .content-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gray-dark);
+      flex: 1;
+      text-align: center;
+    }
+
+    .font-controls {
+      display: flex;
+      gap: 8px;
+    }
+
+    .font-btn {
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: var(--cream);
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray);
+    }
+
+    .content-body {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      line-height: 2.2;
+      color: var(--gray-dark);
+      font-size: 16px;
+      white-space: pre-wrap;
+    }
+
+    /* Not Started State */
+    .not-started-card {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .not-started-icon {
+      font-size: 60px;
+      margin-bottom: 16px;
+    }
+
+    .not-started-text {
+      font-size: 15px;
+      color: var(--gray);
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+
+    .start-btn {
+      background: var(--red);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 16px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    /* Schedule Grid */
+    .schedule-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gray-dark);
+      padding: 20px 16px 12px;
+      text-align: center;
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding: 0 12px 20px;
+    }
+
+    .schedule-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 12px 8px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .schedule-card.completed {
+      background: var(--green-light);
+      border: 1px solid var(--green);
+    }
+
+    .schedule-card.current {
+      background: var(--red-light);
+      border: 2px solid var(--red);
+    }
+
+    .schedule-level {
+      font-size: 11px;
+      color: var(--gray);
+      margin-bottom: 4px;
+    }
+
+    .schedule-dates {
+      font-size: 10px;
+      color: var(--gray-dark);
+      font-weight: 600;
+    }
+
+    /* Hidden */
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== Home Screen ===== -->
+  <div id="homeScreen" class="screen active">
+    <!-- AppBar -->
+    <div class="appbar">
+      <div class="appbar-left">
+        <div class="buddha-logo">☸</div>
+        <span class="appbar-title">ဓမ္မဒါန ဘုရားရှိခိုး</span>
+      </div>
+      <div class="appbar-actions">
+        <button class="icon-btn" onclick="resetAll()" title="Reset">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Progress Card -->
+    <div class="card progress-card" id="progressCard">
+      <div class="circular-progress">
+        <svg viewBox="0 0 100 100">
+          <circle class="bg" cx="50" cy="50" r="42"/>
+          <circle class="progress" cx="50" cy="50" r="42"
+            stroke-dasharray="264"
+            stroke-dashoffset="264"
+            id="progressCircle"/>
+        </svg>
+        <span class="progress-text" id="progressPercent">၀%</span>
+      </div>
+      <div class="progress-info">
+        <div class="progress-info-row">
+          <span>စုစုပေါင်းရက်</span>
+          <span>၈၁ ရက်</span>
+        </div>
+        <div class="progress-info-row">
+          <span>ကျန်ရှိသောရက်</span>
+          <span id="remainingDays">၈၁ ရက်</span>
+        </div>
+        <div class="progress-info-row">
+          <span>စတင်သည့်ရက်</span>
+          <span class="date-row" onclick="showCalendarDialog()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            <span id="startDateDisplay">--</span>
+          </span>
+        </div>
+        <div class="progress-info-row">
+          <span>ပြီးဆုံးမည့်ရက်</span>
+          <span id="endDateDisplay">--</span>
+        </div>
+        <button class="edit-btn" onclick="showCalendarDialog()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+          ပြင်ဆင်ရန်
+        </button>
+      </div>
+    </div>
+
+    <!-- Today Card (Only show when adhithan started) -->
+    <div class="card today-card" id="todayCard">
+      <div class="today-inner-card">
+        <div class="today-badge" id="todayBadge">ယနေ့</div>
+        <div class="gatha-info">
+          <div class="gatha-title" id="todayGatha">--</div>
+          <div class="gatha-count" id="todayCount">--</div>
+        </div>
+        <div class="day-badges" id="dayBadges">
+          <!-- Day badges 1-9 will be generated -->
+        </div>
+      </div>
+
+      <!-- Counter Section -->
+      <div class="counter-section">
+        <div class="counter-title">ပုတီးစိပ်အကြိမ်ရေတွက်ရန်</div>
+        <div class="counter-wrapper">
+          <button class="counter-btn" onclick="incrementCounter()">
+            <span class="counter-value" id="counterValue">၀</span>
+          </button>
+          <button class="reset-btn" onclick="resetCounter()">ပြန်စမည်</button>
+        </div>
+      </div>
+    </div>
+      <!-- Step Indicators -->
+      <div class="step-indicators" id="stepIndicators">
+        <!-- Step circles 1-9 will be generated -->
+      </div>
+    <!-- Not Started Card -->
+    <div class="card not-started-card" id="notStartedCard">
+      <div class="not-started-icon">🙏</div>
+      <div class="not-started-text">
+        အဓိဌာန်မဝင်ရသေးပါ<br>
+        အဓိဌာန်စတင်ရန် အောက်ပါခလုတ်ကိုနှိပ်ပါ
+      </div>
+      <button class="start-btn" onclick="switchToAdhithan()">အဓိဌာန်စတင်ရန်</button>
+    </div>
+
+    <!-- Gatha Section -->
+    <div id="gathaSection" class="hidden">
+      <div class="section-title" id="sectionTitle">ပထမအဆင့် ဂါထာတော်များ</div>
+      <div class="gatha-grid" id="gathaGrid">
+        <!-- Gatha cards will be generated -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Adhithan Screen ===== -->
+  <div id="adhithanScreen" class="screen">
+    <div class="adhithan-content">
+      <div class="adhithan-title">အဓိဌာန်</div>
+      <div class="adhithan-text">
+        အဓိဋ္ဌာန် (၉) ဆင့် ရှိသည်။
+
+တစ်ဆင့်လျှင် (၉) ရက်နှုန်းဖြင့် (၈၁) ရက် မပျက်မကွက် ဝင်ရမည်။
+
+တစ်ဆင့်လျှင် သင်၏ အရေးကြီးဆုံး ကိစ္စတစ်ခုကို ဆုတောင်းနိုင်ပါသည်။
+
+အဓိဋ္ဌာန် (၉) ဆင့် အောင်မြင်ချိန်၌ သင်၏ ဆုတောင်းများ အံ့ဩဖွယ်ရာ ပြည့်ဝနေလိမ့်မည်ဟု ရဲရဲကြီး ယုံကြည်ပါ။
+
+ဖော်ပြထားသော ဂုဏ်တော်အမှတ်စဉ်အတိုင်း စိပ်ပါ။
+
+မည်သည့်နေ့တွင် မွေးဖွားသော သားသမီးမဆို တနင်္လာနေ့မှ စ၍ အဓိဋ္ဌာန် ဝင်ရမည်။
+
+ဂုဏ်တော်ကိုးပါးဖြင့် လောကီအကျိုးစီးပ���ား အောင်မြင် ဖြစ်ထွန်းစေသော အဓိဋ္ဌာန် ဖြစ်သည်။
+      </div>
+      <div class="adhithan-buttons">
+        <button class="adhithan-btn" onclick="startAdhithan()">အဓိဌာန်စမည်</button>
+        <button class="adhithan-btn" style="background: var(--gray);" onclick="continueAdhithan()">ရောက်ရှိနေသောအဓိဌာန်မှစမည်</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Schedule Screen ===== -->
+  <div id="scheduleScreen" class="screen">
+    <div class="schedule-title">အဓိဌာန်ဇယား</div>
+    <div id="scheduleContent">
+      <div class="not-started-card">
+        <div class="not-started-icon">📅</div>
+        <div class="not-started-text">အဓိဌာန်မဝင်ရသေးပါ</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Prayer List Screen ===== -->
+  <div id="prayerScreen" class="screen">
+    <div class="prayer-list">
+      <div class="prayer-list-title">ဘုရားရှိခိုး</div>
+      <div class="prayer-item" onclick="showContent('ဘုရားရှိခိုး', prayerContents.shikhoe)">
+        <span class="prayer-item-title">ဘုရားရှိခိုး</span>
+        <span class="prayer-item-arrow">›</span>
+      </div>
+      <div class="prayer-item" onclick="showContent('ဘုရားပင့်', prayerContents.pin)">
+        <span class="prayer-item-title">ဘုရားပင့်</span>
+        <span class="prayer-item-arrow">›</span>
+      </div>
+      <div class="prayer-item" onclick="showContent('အနေကဇာတင်', prayerContents.aneka)">
+        <span class="prayer-item-title">အနေကဇာတင်</span>
+        <span class="prayer-item-arrow">›</span>
+      </div>
+      <div class="prayer-item" onclick="showContent('ဂါထာတော်', prayerContents.gatha)">
+        <span class="prayer-item-title">ဂါထာတော်</span>
+        <span class="prayer-item-arrow">›</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Content Screen ===== -->
+  <div id="contentScreen" class="screen">
+    <div class="content-screen">
+      <div class="content-header">
+        <button class="back-btn" onclick="goBack()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <div class="content-title" id="contentTitle">--</div>
+        <div class="font-controls">
+          <button class="font-btn" onclick="changeFontSize(-2)">အ-</button>
+          <button class="font-btn" onclick="changeFontSize(2)">အ+</button>
+        </div>
+      </div>
+      <div class="content-body" id="contentBody">--</div>
+    </div>
+  </div>
+
+  <!-- ===== Bottom Navigation ===== -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-screen="home" onclick="switchScreen('home')">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span class="nav-label">ပင်မ</span>
+    </button>
+    <button class="nav-item" data-screen="adhithan" onclick="switchScreen('adhithan')">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 6v6l4 2"/>
+      </svg>
+      <span class="nav-label">အဓိဌာန်</span>
+    </button>
+    <button class="nav-item" data-screen="schedule" onclick="switchScreen('schedule')">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+        <line x1="16" y1="2" x2="16" y2="6"/>
+        <line x1="8" y1="2" x2="8" y2="6"/>
+        <line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      <span class="nav-label">ဇယား</span>
+    </button>
+    <button class="nav-item" data-screen="prayer" onclick="switchScreen('prayer')">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+      </svg>
+      <span class="nav-label">ဘုရားရှိခိုး</span>
+    </button>
+  </nav>
+
+  <!-- ===== Calendar Dialog ===== -->
+  <div class="dialog-overlay" id="calendarDialog">
+    <div class="dialog">
+      <div class="dialog-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" style="display:inline;vertical-align:middle;margin-right:8px;">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        စတင်ရက်ပြင်ရန်
+      </div>
+      <input type="date" class="calendar-input" id="dateInput">
+      <div class="dialog-buttons">
+        <button class="dialog-btn secondary" onclick="closeDialog('calendarDialog')">ပိတ်မည်</button>
+        <button class="dialog-btn primary" onclick="saveStartDate()">သိမ်းမည်</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Alert Dialog ===== -->
+  <div class="dialog-overlay" id="alertDialog">
+    <div class="dialog">
+      <div class="dialog-title" id="alertTitle">သတိပေးချက်</div>
+      <div class="dialog-content" id="alertContent">--</div>
+      <div class="dialog-buttons">
+        <button class="dialog-btn primary" onclick="closeDialog('alertDialog')">အိုကေ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Vegetarian Dialog ===== -->
+  <div class="dialog-overlay" id="vegetarianDialog">
+    <div class="dialog">
+      <div class="dialog-title" style="color: var(--green);">🌿 သတိပေးချက်</div>
+      <div class="dialog-content" style="color: var(--green); text-align: center;">
+        ယနေ့ သားသတ်လွတ်စားရမည့်နေ့ဖြစ်သည်။
+      </div>
+      <div class="dialog-buttons">
+        <button class="dialog-btn primary" style="background: var(--green);" onclick="closeDialog('vegetarianDialog')">အိုကေ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Touch Sound -->
+  <audio id="touchSound" preload="auto">
+    <source src="data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA/+M4wAAAAAAAAAAAAEluZm8AAAAPAAAAAwAAAbAAqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV1dXV////////////////////////////////////////////AAAAAExhdmM1OC4xMwAAAAAAAAAAAAAAACQDgAAAAAAAAAGwNfKkCgAAAAAAAAAAAAAAAAD/4xjEAAMoALf9AAAAR0xBTUUgaXMgYSBoaWdoIHF1YWxpdHkgTVBFRyBBdWRpbyBMYXllciBJSUkgKE1QMykgZW5jb2RlciBsaWNlbnNlZCB1bmRlciB0aGUgTEdQTC4gSHR0cDovL2xhbWUuc291cmNlZm9yZ2UubmV0L/8zGMQRBQgAvAGAAIAAADSAAAAEf/8ywAAAA0gAAABRg0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0NDQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU=" type="audio/mp3">
+  </audio>
+
+  <script>
+    // ===== ဂါထာတော် Data (All 9 Levels) =====
+    const gathaData = {
+      1: [ // ပထမအဆင့်
+        { day: 'တနင်္လာ', gatha: 'သမ္မာသမ္ဗုဒ္ဓေါ', count: '၂ ပတ်' },
+        { day: 'အင်္ဂါ', gatha: 'ဘဂဝါ', count: '၉ ပတ်' },
+        { day: 'ဗုဒ္ဓဟူး', gatha: 'သုဂတော', count: '၄ ပတ်' },
+        { day: 'ကြာသပတေး', gatha: 'သတ္ထာဒေဝမနုဿာနံ', count: '၇ ပတ်' },
+        { day: 'သောကြာ', gatha: 'လောကဝိဒူ', count: '၅ ပတ်' },
+        { day: 'စနေ', gatha: 'ဝိဇ္ဇာစရဏသမ္ပန္နော', count: '၃ ပတ်' },
+        { day: 'တနင်္ဂနွေ', gatha: 'အနုတ္တရောပုရိသ ဒမ္မသာရထိ', count: '၆ ပတ်' },
+        { day: 'တနင်္လာ', gatha: 'အရဟံ', count: '၁ ပတ်' },
+        { day: 'အင်္ဂါ', gatha: 'ဗုဒ္ဓေါ', count: '၈ ပတ်' }
+      ],
+      2: [ // ဒုတိယအဆင့်
+        { day: 'ဗုဒ္ဓဟူး', gatha: 'ဝိဇ္ဇာစရဏသမ္ပန္နော', count: '၃ ပတ်' },
+        { day: 'ကြာသပတေး', gatha: 'အရဟံ', count: '၁ ပတ်' },
+        { day: 'သောကြာ', gatha: 'လောကဝိဒူ', count: '၅ ပတ်' },
+        { day: 'စနေ', gatha: 'ဗုဒ္ဓေါ', count: '၈ ပတ်' },
+        { day: 'တနင်္ဂနွေ', gatha: 'အနုတ္တရောပုရိသ ဒမ္မသာရထိ', count: '၆ ပတ်' },
+        { day: 'တနင်္လာ', gatha: 'သုဂတော', count: '၄ ပတ်' },
+        { day: 'အင်္ဂါ', gatha: 'သတ္ထာဒေဝမနုဿာနံ', count: '၇ ပတ်' },
+        { day: 'ဗုဒ္ဓဟူး', gatha: 'သမ္မာသမ္ဗုဒ္ဓေါ', count: '၂ ပတ်' },
+        { day: 'ကြာသပတေး', gatha: 'ဘဂဝါ', count: '၉ ပတ်' }
+      ],
+      3: [ // တတိယအဆင့်
+        { day: 'သောကြာ', gatha: 'သုဂတော', count: '၄ ပတ်' },
+        { day: 'စနေ', gatha: 'သမ္မာသမ္ဗုဒ္ဓေါ', count: '၂ ပတ်' },
+        { day: 'တနင်္ဂနွေ', gatha: 'အနုတ္တရောပုရိသ ဒမ္မသာရထိ', count: '၆ ပတ်' },
+        { day: 'တနင်္လာ', gatha: 'ဘဂဝါ', count: '၉ ပတ်' },
+        { day: 'အင်္ဂါ', gatha: 'သတ္ထာဒေဝမနုဿာနံ', count: '၇ ပတ်' },
+        { day: 'ဗုဒ္ဓဟူး', gatha: 'လောကဝိဒူ', count: '၅ ပတ်' },
+        { day: 'ကြာသပတေး', gatha: 'ဗုဒ္ဓေါ', count: '၈ ပတ်' },
+        { day: 'သောကြာ', gatha: 'ဝိဇ္ဇာစရဏသမ္ပန္နော', count: '၃ ပတ်' },
+        { day: 'စနေ', gatha: 'အရဟံ', count: '၁ ပတ်' }
+      ],
+      4: [ // စတုတ္ထအဆင့်
+        { day: 'တနင်္ဂနွေ', gatha: 'လောကဝိဒူ', count: '၅ ပတ်' },
+        { day: 'တနင်္လာ', gatha: 'ဝိဇ္ဇာစရဏသမ္ပန္နော', count: '၃ ပတ်' },
+        { day: 'အင်္ဂါ', gatha: 'သတ္ထာဒေဝမနုဿာနံ', count: '၇ ပတ်' },
+        { day: 'ဗုဒ္ဓဟူး', gatha: 'အရဟံ', count: '၁ ပတ်' },
+        { day: 'ကြာသပတေး', gatha: 'ဗုဒ္ဓေါ', count: '၈ ပတ်' },
+        { day: 'သောကြာ', gatha: 'အနုတ္တရောပုရိသ ဒမ္မသာရထိ', count: '၆ ပတ်' },
+        { day: 'စနေ', gatha: 'ဘဂဝါ', count: '၉ ပတ်' },
+        { day: 'တနင်္ဂနွေ', gatha: 'သုဂတော', count: '၄ ပတ်' },
+        { day: 'တနင်္လာ', gatha: 'သမ္မာသမ္ဗုဒ္ဓေါ', count: '၂ ပတ်' }
+      ],
+      5: [ // ပဉ္စမအဆင့်
+        { day: 'အင်္ဂါ', gatha: 'အနုတ္တရောပုရိသ ဒမ္မ���ာရထိ', count: '၆ ပတ်' },
+        { day: 'ဗုဒ္ဓဟူး', gatha: 'သုဂတော', count: '၄ ပတ်' },
+        { day: 'ကြာသပတေး', gatha: 'ဗုဒ္ဓေါ', count: '၈ ပတ်' },
+        { day: 'သောကြာ', gatha: 'သမ္မာသမ္ဗုဒ္ဓေါ', count: '၂ ပတ်' },
+        { day: 'စနေ', gatha: 'ဘဂဝါ', count: '၉ ပတ်' },
+        { day: 'တနင်္ဂနွေ', gatha: 'သတ္ထာဒေဝမနုဿာနံ', count: '၇ ပတ်' },
+        { day: 'တနင်္လာ', gatha: 'အရဟံ', count: '၁ ပတ်' },
+        { day: 'အင်္ဂါ', gatha: 'လောကဝိဒူ', count: '၅ ပတ်' },
+        { day: 'ဗုဒ္ဓဟူး', gatha: 'ဝိဇ္ဇာစရဏသမ္ပန္နော', count: '၃ ပတ်' }
+      ],
+      6: [ // ဆဌမအဆင့်
+        { day: 'ကြာသပတေး', gatha: 'သတ္ထာဒေဝမနုဿာနံ', count: '၇ ပတ်' },
+        { day: 'သောကြာ', gatha: 'လောကဝိဒူ', count: '၅ ပတ်' },
+        { day: 'စနေ', gatha: 'ဘဂဝါ', count: '၉ ပတ်' },
+        { day: 'တနင်္ဂနွေ', gatha: 'ဝိဇ္ဇာစရဏသမ္ပန္နော', count: '၃ ပတ်' },
+        { day: 'တနင်္လာ', gatha: 'အရဟံ', count: '၁ ပတ်' },
+        { day: 'အင်္ဂါ', gatha: 'ဗုဒ္ဓေါ', count: '၈ ပတ်' },
+        { day: 'ဗုဒ္ဓဟူး', gatha: 'သမ္မာသမ္ဗုဒ္ဓေါ', count: '၂ ပတ်' },
+        { day: 'ကြာသပတေး', gatha: 'အနုတ္တရောပုရိသ ဒမ္မသာရထိ', count: '၆ ပတ်' },
+        { day: 'သောကြာ', gatha: 'သုဂတော', count: '၄ ပတ်' }
+      ],
+      7: [ // သတ္တမအဆင့်
+        { day: 'စနေ', gatha: 'ဗုဒ္ဓေါ', count: '၈ ပတ်' },
+        { day: 'တနင်္ဂနွေ', gatha: 'အနုတ္တရောပုရိသ ဒမ္မသာရထိ', count: '၆ ပတ်' },
+        { day: 'တနင်္လာ', gatha: 'အရဟံ', count: '၁ ပတ်' },
+        { day: 'အင်္ဂါ', gatha: 'သုဂတော', count: '၄ ပတ်' },
+        { day: 'ဗုဒ္ဓဟူး', gatha: 'သမ္မာသမ္ဗုဒ္ဓေါ', count: '၂ ပတ်' },
+        { day: 'ကြာသပတေး', gatha: 'ဘဂဝါ', count: '၉ ပတ်' },
+        { day: 'သောကြာ', gatha: 'ဝိဇ္ဇာစရဏသမ္ပန္နော', count: '၃ ပတ်' },
+        { day: 'စနေ', gatha: 'သတ္ထာဒေဝမနုဿာနံ', count: '၇ ပတ်' },
+        { day: 'တနင်္ဂနွေ', gatha: 'လောကဝိဒူ', count: '၅ ပတ်' }
+      ],
+      8: [ // အဋ္ဌမအဆင့်
+        { day: 'တနင်္လာ', gatha: 'ဘဂဝါ', count: '၉ ပတ်' },
+        { day: 'အင်္ဂါ', gatha: 'သတ္ထာဒေဝမနုဿာနံ', count: '၇ ပတ်' },
+        { day: 'ဗုဒ္ဓဟူး', gatha: 'သမ္မာသမ္ဗုဒ္ဓေါ', count: '၂ ပတ်' },
+        { day: 'ကြာသပတေး', gatha: 'လောကဝိဒူ', count: '၅ ပတ်' },
+        { day: 'သောကြာ', gatha: 'ဝိဇ္ဇာစရဏသမ္ပန္နော', count: '၃ ပတ်' },
+        { day: 'စနေ', gatha: 'အရဟံ', count: '၁ ပတ်' },
+        { day: 'တနင်္ဂနွေ', gatha: 'သုဂတော', count: '၄ ပတ်' },
+        { day: 'တနင်္လာ', gatha: 'ဗုဒ္ဓေါ', count: '၈ ပတ်' },
+        { day: 'အင်္ဂါ', gatha: 'အနုတ္တရောပုရိသ ဒမ္မသာရထိ', count: '၆ ပတ်' }
+      ],
+      9: [ // န၀မအဆင့်
+        { day: 'ဗုဒ္ဓဟူး', gatha: 'အရဟံ', count: '၁ ပတ်' },
+        { day: 'ကြာသပတေး', gatha: 'ဗုဒ္ဓေါ', count: '၈ ပတ်' },
+        { day: 'သောကြာ', gatha: 'ဝိဇ္ဇာစရဏသမ္ပန္နော', count: '၃ ပတ်' },
+        { day: 'စနေ', gatha: 'အနုတ္တရောပုရိသ ဒမ္မသာရထိ', count: '၆ ပတ်' },
+        { day: 'တနင်္ဂနွေ', gatha: 'သုဂတော', count: '၄ ပတ်' },
+        { day: 'တနင်္လာ', gatha: 'သမ္မာသမ္ဗုဒ္ဓေါ', count: '၂ ပတ်' },
+        { day: 'အင်္ဂါ', gatha: 'လောကဝိဒူ', count: '၅ ပတ်' },
+        { day: 'ဗုဒ္ဓဟူး', gatha: 'ဘဂဝါ', count: '၉ ပတ်' },
+        { day: 'ကြာသပတေး', gatha: 'သတ္ထာဒေဝမနုဿာနံ', count: '၇ ပတ်' }
+      ]
+    };
+
+    // အဆင့်နာမည်များ
+    const levelNames = ['ပထမ', 'ဒုတိယ', 'တတိယ', 'စတုတ္ထ', 'ပဉ္စမ', 'ဆဌမ', 'သတ္တမ', 'အဋ္ဌမ', 'န၀မ'];
+
+    // မြန်မာနံပါတ်များ
+    const myanmarNums = ['၀', '၁', '၂', '၃', '၄', '၅', '၆', '၇', '၈', '၉'];
+
+    // ဘုရားရှိခိုးစာများ
+    const prayerContents = {
+      shikhoe: `နမော တဿ ဘဂဝတော အရဟတော သမ္မာသမ္ဗုဒ္ဓဿ။ (၃) ကြိမ်
+
+ဗုဒ္ဓံ သရဏံ ဂစ္ဆာမိ။
+ဓမ္မံ သရဏံ ဂစ္ဆာမိ။
+သံဃံ သရဏံ ဂစ္ဆာမိ။
+
+ဒုတိယမ္ပိ ဗုဒ္ဓံ သရဏံ ဂစ္ဆာမိ။
+ဒုတိယမ္ပိ ဓမ္မံ သရဏံ ဂစ္ဆာမိ။
+ဒုတိယမ္ပိ သံဃံ သရဏံ ဂစ္ဆာမိ။
+
+တတိယမ္ပိ ဗုဒ္ဓံ သရဏံ ဂစ္ဆာမိ။
+တတိယမ္ပိ ဓမ္မံ သရဏံ ဂစ္ဆာမိ။
+တတိယမ္ပိ သံဃံ သရဏံ ဂစ္ဆာမိ။`,
+
+      pin: `အရဟံ သမ္မာသမ္ဗုဒ္ဓေါ ဘဂဝါ၊
+ဗုဒ္ဓံ ဘဂဝန္တံ အဘိဝါဒေမိ။
+
+သွာက္ခါတော ဘဂဝတာ ဓမ္မော၊
+ဓမ္မံ နမဿာမိ။
+
+သုပဋိပန္နော ဘဂဝတော သာဝကသံဃော၊
+သံဃံ နမာမိ။`,
+
+      aneka: `အနေကဇာတိ သံသာရံ၊
+သန္ဓာဝိဿံ အနိဗ္ဗိသံ။
+ဂဟကာရကံ ဂဝေသန္တော၊
+ဒုက္ခာ ဇာတိ ပုနပ္ပုနံ။
+
+ဂဟကာရက ဒိဋ္ဌောသိ၊
+ပုန ဂေဟံ န ကာဟသိ။
+သဗ္ဗာ တေ ဖာသုကာ ဘဂ္ဂါ၊
+ဂဟကူဋံ ဝိသင်္ခိတံ။
+
+ဝိသင်္ခါရဂတံ စိတ္တံ၊
+တဏှာနံ ခယမဇ္ဈဂါ။`,
+
+      gatha: `ဂုဏ်တော်ကိုးပါး
+
+၁။ အရဟံ - ကိလေသာတရားများမှ ကင်းစင်တော်မူသော
+၂။ သမ္မာသမ္ဗုဒ္ဓေါ - အလုံးစုံသော တရားတို့ကို ကိုယ်တိုင်မှန်စွာ သိတော်မူသော
+၃။ ဝိဇ္ဇာစရဏသမ္ပန္နော - အသိဉာဏ်နှင့် အကျင့်တို့နှင့် ပြည့်စုံတော်မူသော
+၄။ သုဂတော - ကောင်းသောစကားကို ဆိုတော်မူသော
+၅။ လောကဝိဒူ - လောကကို သိတော်မူသော
+၆။ အနုတ္တရော ပုရိသဒမ္မသာရထိ - ယဉ်ကျေးစေထိုက်သော သူတို့ကို ယဉ်ကျေးစေတတ်သော
+၇။ သတ္ထာဒေဝမနုဿာနံ - နတ်လူတို့၏ ဆရာဖြစ်တော်မူသော
+၈။ ဗုဒ္ဓေါ - သစ္စာလေးပါးကို သိတော်မူသော
+၉။ ဘဂဝါ - ဘုန်းတန်ခိုးနှင့် ပြည့်စုံတော်မူသော`
+    };
+
+    // ===== State Variables =====
+    let startDate = null;
+    let counter = 0;
+    let currentScreen = 'home';
+    let previousScreen = 'home';
+    let contentFontSize = 16;
+
+    // ===== Helper Functions =====
+
+    // နံပါတ်ကို မြန်မာလို ပြောင်း
+    function toMyanmarNum(num) {
+      return String(num).split('').map(d => myanmarNums[parseInt(d)] || d).join('');
+    }
+
+    // Date ကို မြန်မာလို ပြောင်း
+    function formatDateMyanmar(date) {
+      if (!date) return '--';
+      const d = new Date(date);
+      const day = d.getDate();
+      const month = d.getMonth() + 1;
+      const year = d.getFullYear();
+      return `${toMyanmarNum(day)}/${toMyanmarNum(month)}/${toMyanmarNum(year)}`;
+    }
+
+    // Date နေ့ကို မြန်မာလို ယူ
+    function getMyanmarDayName(date) {
+      const days = ['တနင်္ဂနွေ', 'တနင်္လာ', 'အင်္ဂါ', 'ဗုဒ္ဓဟူး', 'ကြာသပတေး', 'သောကြာ', 'စနေ'];
+      return days[new Date(date).getDay()];
+    }
+
+    // တနင်္လာနေ့ဟုတ်မဟုတ် စစ်
+    function isMonday(date) {
+      return new Date(date).getDay() === 1;
+    }
+
+    // ရက်ပေါင်း
+    function addDays(date, days) {
+      const result = new Date(date);
+      result.setDate(result.getDate() + days);
+      return result;
+    }
+
+    // ရက်အရေအတွက် တွက်
+    function getDaysBetween(start, end) {
+      const diffTime = end.getTime() - start.getTime();
+      return Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    }
+
+    // လက်ရှိအဆင့်နှင့် ရက် ယူ
+    function getCurrentLevelAndDay() {
+      if (!startDate) return { level: 0, dayInLevel: 0, totalDays: 0 };
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const start = new Date(startDate);
+      start.setHours(0, 0, 0, 0);
+
+      const totalDays = getDaysBetween(start, today);
+
+      if (totalDays < 0 || totalDays >= 81) {
+        return { level: totalDays < 0 ? 1 : 9, dayInLevel: totalDays < 0 ? 0 : 9, totalDays: Math.max(0, Math.min(81, totalDays)) };
+      }
+
+      const level = Math.floor(totalDays / 9) + 1;
+      const dayInLevel = (totalDays % 9) + 1;
+
+      return { level, dayInLevel, totalDays: totalDays + 1 };
+    }
+
+    // ===== UI Update Functions =====
+
+    // Progress bar update
+    function updateProgress() {
+      const { totalDays } = getCurrentLevelAndDay();
+      const percent = Math.min(100, Math.round((totalDays / 81) * 100));
+      const remaining = Math.max(0, 81 - totalDays);
+
+      // Update circular progress
+      const circle = document.getElementById('progressCircle');
+      const circumference = 264; // 2 * PI * 42
+      const offset = circumference - (percent / 100) * circumference;
+      circle.style.strokeDashoffset = offset;
+
+      // Update text
+      document.getElementById('progressPercent').textContent = toMyanmarNum(percent) + '%';
+      document.getElementById('remainingDays').textContent = toMyanmarNum(remaining) + ' ရက်';
+
+      // Update dates
+      if (startDate) {
+        document.getElementById('startDateDisplay').textContent = formatDateMyanmar(startDate);
+        const endDate = addDays(new Date(startDate), 80);
+        document.getElementById('endDateDisplay').textContent = formatDateMyanmar(endDate);
+      }
+    }
+
+    // Step indicators update
+    function updateStepIndicators() {
+      const { level } = getCurrentLevelAndDay();
+      const container = document.getElementById('stepIndicators');
+      container.innerHTML = '';
+
+      for (let i = 1; i <= 9; i++) {
+        const circle = document.createElement('div');
+        circle.className = 'step-circle';
+        if (i < level) {
+          circle.classList.add('active');
+        } else if (i === level) {
+          circle.classList.add('current');
+        }
+        circle.textContent = toMyanmarNum(i);
+        container.appendChild(circle);
+      }
+    }
+
+    // Day badges update
+    function updateDayBadges() {
+      const { dayInLevel } = getCurrentLevelAndDay();
+      const container = document.getElementById('dayBadges');
+      container.innerHTML = '';
+
+      for (let i = 1; i <= 9; i++) {
+        const badge = document.createElement('div');
+        badge.className = 'day-badge';
+        if (i < dayInLevel) {
+          badge.classList.add('completed');
+        } else if (i === dayInLevel) {
+          badge.classList.add('active');
+        }
+        badge.textContent = toMyanmarNum(i) + 'ရက်';
+        container.appendChild(badge);
+      }
+    }
+
+    // Today info update
+    function updateTodayInfo() {
+      const { level, dayInLevel } = getCurrentLevelAndDay();
+
+      if (level >= 1 && level <= 9 && dayInLevel >= 1 && dayInLevel <= 9) {
+        const gatha = gathaData[level][dayInLevel - 1];
+        document.getElementById('todayGatha').textContent = gatha.gatha;
+        document.getElementById('todayCount').textContent = gatha.count + ' (ပုတီးစိပ်ရန်)';
+        document.getElementById('todayBadge').textContent = 'ယနေ့ - ' + gatha.day;
+      }
+    }
+
+    // Gatha grid update
+    function updateGathaGrid() {
+      const { level, dayInLevel, totalDays } = getCurrentLevelAndDay();
+      const container = document.getElementById('gathaGrid');
+      container.innerHTML = '';
+
+      if (!startDate || level < 1) return;
+
+      const currentLevelData = gathaData[level];
+      if (!currentLevelData) return;
+
+      // Update section title
+      document.getElementById('sectionTitle').textContent = levelNames[level - 1] + 'အဆင့် ဂါထာတော်များ';
+
+      currentLevelData.forEach((item, index) => {
+        const dayNum = index + 1;
+        const cardDate = addDays(new Date(startDate), (level - 1) * 9 + index);
+        const isToday = dayNum === dayInLevel;
+        const isVegetarian = dayNum === 5; // 5th day is vegetarian day
+
+        const card = document.createElement('div');
+        card.className = 'gatha-card';
+        if (isToday) card.classList.add('today');
+        if (isVegetarian) card.classList.add('vegetarian');
+
+        card.innerHTML = `
+          <div class="gatha-card-day">${item.day}</div>
+          <div class="gatha-card-num">${toMyanmarNum(dayNum)}</div>
+          <div class="gatha-card-title">${item.gatha}</div>
+          <div class="gatha-card-count">${item.count}</div>
+          ${isVegetarian ? '<div class="vegetarian-text">သားသတ်လွတ်နေ့</div>' : ''}
+          <div class="gatha-card-date">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+            </svg>
+            ${formatDateMyanmar(cardDate)}
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    // Schedule update
+    function updateSchedule() {
+      const container = document.getElementById('scheduleContent');
+
+      if (!startDate) {
+        container.innerHTML = `
+          <div class="not-started-card">
+            <div class="not-started-icon">📅</div>
+            <div class="not-started-text">အဓိဌာန်မဝင်ရသေးပါ</div>
+          </div>
+        `;
+        return;
+      }
+
+      const { level } = getCurrentLevelAndDay();
+
+      let html = '<div class="schedule-grid">';
+
+      for (let i = 1; i <= 9; i++) {
+        const levelStart = addDays(new Date(startDate), (i - 1) * 9);
+        const levelEnd = addDays(new Date(startDate), i * 9 - 1);
+
+        let cardClass = 'schedule-card';
+        if (i < level) cardClass += ' completed';
+        if (i === level) cardClass += ' current';
+
+        html += `
+          <div class="${cardClass}">
+            <div class="schedule-level">${levelNames[i - 1]}အဆင့်</div>
+            <div class="schedule-dates">${formatDateMyanmar(levelStart)}<br>မှ<br>${formatDateMyanmar(levelEnd)}</div>
+          </div>
+        `;
+      }
+
+      html += '</div>';
+      container.innerHTML = html;
+    }
+
+    // Show/hide cards based on state
+    function updateHomeState() {
+      const notStartedCard = document.getElementById('notStartedCard');
+      const todayCard = document.getElementById('todayCard');
+      const gathaSection = document.getElementById('gathaSection');
+
+      if (startDate) {
+        notStartedCard.classList.add('hidden');
+        todayCard.classList.remove('hidden');
+        gathaSection.classList.remove('hidden');
+
+        updateProgress();
+        updateStepIndicators();
+        updateDayBadges();
+        updateTodayInfo();
+        updateGathaGrid();
+
+        // Check for vegetarian day
+        const { dayInLevel } = getCurrentLevelAndDay();
+        if (dayInLevel === 5) {
+          setTimeout(() => showDialog('vegetarianDialog'), 500);
+        }
+      } else {
+        notStartedCard.classList.remove('hidden');
+        todayCard.classList.add('hidden');
+        gathaSection.classList.add('hidden');
+      }
+    }
+
+    // ===== Screen Navigation =====
+    function switchScreen(screen) {
+      previousScreen = currentScreen;
+      currentScreen = screen;
+
+      // Hide all screens
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+
+      // Show selected screen
+      const screenMap = {
+        'home': 'homeScreen',
+        'adhithan': 'adhithanScreen',
+        'schedule': 'scheduleScreen',
+        'prayer': 'prayerScreen',
+        'content': 'contentScreen'
+      };
+
+      document.getElementById(screenMap[screen]).classList.add('active');
+
+      // Update nav
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.toggle('active', item.dataset.screen === screen);
+      });
+
+      // Update content based on screen
+      if (screen === 'schedule') {
+        updateSchedule();
+      }
+    }
+
+    function switchToAdhithan() {
+      switchScreen('adhithan');
+    }
+
+    function goBack() {
+      switchScreen(previousScreen || 'prayer');
+    }
+
+    // ===== Dialog Functions =====
+    function showDialog(dialogId) {
+      document.getElementById(dialogId).classList.add('show');
+    }
+
+    function closeDialog(dialogId) {
+      document.getElementById(dialogId).classList.remove('show');
+    }
+
+    function showAlert(title, content) {
+      document.getElementById('alertTitle').textContent = title;
+      document.getElementById('alertContent').textContent = content;
+      showDialog('alertDialog');
+    }
+
+    function showCalendarDialog() {
+      const input = document.getElementById('dateInput');
+      if (startDate) {
+        input.value = startDate;
+      } else {
+        input.value = new Date().toISOString().split('T')[0];
+      }
+      showDialog('calendarDialog');
+    }
+
+    function saveStartDate() {
+      const input = document.getElementById('dateInput');
+      const selectedDate = input.value;
+
+      if (!selectedDate) {
+        showAlert('သတိပေးချက်', 'ရက်စွဲရွေးပါ');
+        return;
+      }
+
+      if (!isMonday(selectedDate)) {
+        showAlert('သတိပေးချက်', 'တနင်္လာနေ့မှသာ အဓိဌာန်စဝင်လို့ရမည်');
+        return;
+      }
+
+      startDate = selectedDate;
+      closeDialog('calendarDialog');
+      updateHomeState();
+      switchScreen('home');
+    }
+
+    // ===== Adhithan Functions =====
+    function startAdhithan() {
+      showCalendarDialog();
+    }
+
+    function continueAdhithan() {
+      if (!startDate) {
+        showAlert('သတိပေးချက်', 'မိတ်ဆွေ အဓိဌာန် မဝင်ရသေးပါ');
+      } else {
+        switchScreen('home');
+      }
+    }
+
+    // ===== Counter Functions =====
+    function incrementCounter() {
+      counter++;
+      document.getElementById('counterValue').textContent = toMyanmarNum(counter);
+
+      // Play touch sound
+      const sound = document.getElementById('touchSound');
+      sound.currentTime = 0;
+      sound.play().catch(() => {});
+
+      // Visual feedback
+      const btn = document.querySelector('.counter-btn');
+      btn.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        btn.style.transform = '';
+      }, 100);
+    }
+
+    function resetCounter() {
+      counter = 0;
+      document.getElementById('counterValue').textContent = toMyanmarNum(counter);
+    }
+
+    // ===== Content Functions =====
+    function showContent(title, content) {
+      document.getElementById('contentTitle').textContent = title;
+      document.getElementById('contentBody').textContent = content;
+      document.getElementById('contentBody').style.fontSize = contentFontSize + 'px';
+      switchScreen('content');
+    }
+
+    function changeFontSize(delta) {
+      contentFontSize = Math.max(12, Math.min(28, contentFontSize + delta));
+      document.getElementById('contentBody').style.fontSize = contentFontSize + 'px';
+    }
+
+    // ===== Reset Function =====
+    function resetAll() {
+      const modal = document.createElement('div');
+      modal.className = 'dialog-overlay show';
+      modal.innerHTML = `
+        <div class="dialog">
+          <div class="dialog-title">အားလုံးဖျက်မည်</div>
+          <div class="dialog-content">သေချာပါသလား? စတင်ရက်နှင့် အဓိဌာန်အချက်အလက်များ ဖျက်မည်။</div>
+          <div class="dialog-buttons">
+            <button class="dialog-btn secondary" onclick="this.closest('.dialog-overlay').remove()">မလုပ်တော့ပါ</button>
+            <button class="dialog-btn primary" onclick="confirmReset(); this.closest('.dialog-overlay').remove()">ဖျက်မည်</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    function confirmReset() {
+      startDate = null;
+      counter = 0;
+      document.getElementById('counterValue').textContent = toMyanmarNum(0);
+      document.getElementById('startDateDisplay').textContent = '--';
+      document.getElementById('endDateDisplay').textContent = '--';
+      updateHomeState();
+    }
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Reset the state variables
+    startDate = null;
+    counter = 0;
+    currentScreen = 'home';
+    previousScreen = 'home';
+    contentFontSize = 16;
+
+    // Clear any local storage if it's used
+    localStorage.clear(); // If you were using local storage to save state (optional)
+
+    // Update the UI to reflect the reset state
+    updateHomeState();
+});
+
+  </script>
+</body>
+</html>
+
