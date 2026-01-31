@@ -1,0 +1,2022 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ဓမ္မဒါန ဘုရားရှိခိုး</title>
+
+    <!-- Myanmar Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* ===== CSS Variables ===== */
+        :root {
+            --bg-cream: #FDF6E9;
+            --bg-cream-dark: #F5EDD8;
+            --card-white: #FFFFFF;
+            --primary-red: #C41E3A;
+            --primary-red-hover: #A01830;
+            --text-dark: #2D2D2D;
+            --text-gray: #666666;
+            --text-light: #999999;
+            --accent-gold: #D4A853;
+            --accent-green: #2E8B57;
+            --shadow-soft: 0 4px 15px rgba(0,0,0,0.08);
+            --shadow-medium: 0 6px 20px rgba(0,0,0,0.12);
+            --nav-height: 70px;
+            --transition: all 0.3s ease;
+        }
+
+        .dark {
+            --bg-cream: #1A1A2E;
+            --bg-cream-dark: #16213E;
+            --card-white: #252542;
+            --text-dark: #F0F0F0;
+            --text-gray: #B0B0B0;
+            --text-light: #888888;
+            --shadow-soft: 0 4px 15px rgba(0,0,0,0.3);
+            --shadow-medium: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        /* ===== Base Styles ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Padauk', sans-serif;
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding-bottom: calc(var(--nav-height) + 20px);
+            transition: var(--transition);
+        }
+
+        /* ===== AppBar Styles ===== */
+        .app-bar {
+            background: var(--card-white);
+            border-radius: 0 0 14px 14px;
+            box-shadow: var(--shadow-soft);
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            margin-bottom: 16px;
+        }
+
+        .app-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .buddha-logo {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--accent-gold), #B8860B);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+            box-shadow: 0 2px 8px rgba(212, 168, 83, 0.4);
+        }
+
+        .app-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .app-bar-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            border: none;
+            background: var(--bg-cream);
+            color: var(--text-gray);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            font-size: 16px;
+        }
+
+        .icon-btn:hover {
+            background: var(--bg-cream-dark);
+            transform: scale(1.05);
+        }
+
+        /* ===== Container ===== */
+        .container {
+            padding: 0 16px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* ===== Card Styles ===== */
+        .card {
+            background: var(--card-white);
+            border-radius: 14px;
+            box-shadow: var(--shadow-soft);
+            padding: 20px;
+            margin-bottom: 16px;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-medium);
+        }
+
+        /* ===== Progress Card (Card 1) ===== */
+        .progress-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .progress-circle-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            flex-shrink: 0;
+        }
+
+        .progress-circle {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .progress-circle-bg {
+            fill: none;
+            stroke: var(--bg-cream-dark);
+            stroke-width: 8;
+        }
+
+        .progress-circle-fill {
+            fill: none;
+            stroke: var(--accent-green);
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .progress-percent {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent-green);
+        }
+
+        .progress-info {
+            flex: 1;
+        }
+
+        .progress-info h3 {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 8px;
+        }
+
+        .progress-stat {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        .progress-stat span:first-child {
+            color: var(--text-light);
+        }
+
+        .progress-stat span:last-child {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        .date-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            padding: 8px 10px;
+            background: var(--bg-cream);
+            border-radius: 10px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .date-row:hover {
+            background: var(--bg-cream-dark);
+        }
+
+        .date-row i {
+            color: var(--primary-red);
+        }
+
+        .edit-icon {
+            margin-left: auto;
+            color: var(--text-light);
+        }
+
+        /* ===== Today Card (Card 2) ===== */
+        .today-card-inner {
+            background: linear-gradient(135deg, #FFF9F0, #FFF5E6);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .dark .today-card-inner {
+            background: linear-gradient(135deg, #2A2A4A, #252545);
+        }
+
+        .today-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .today-badge {
+            background: var(--primary-red);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .day-badge {
+            background: white;
+            color: var(--text-dark);
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+
+        .dark .day-badge {
+            background: var(--card-white);
+        }
+
+        .gatha-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .gatha-label {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .gatha-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--accent-gold);
+        }
+
+        .gatha-count {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin-left: auto;
+        }
+
+        /* ===== Step Indicators ===== */
+        .step-indicators {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            margin-bottom: 16px;
+        }
+
+        .step-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            background: var(--bg-cream-dark);
+            color: var(--text-light);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .step-circle.active {
+            background: var(--accent-green);
+            color: white;
+            box-shadow: 0 2px 8px rgba(46, 139, 87, 0.4);
+        }
+
+        .step-circle.completed {
+            background: var(--accent-green);
+            color: white;
+            opacity: 0.7;
+        }
+
+        /* ===== Counter Section ===== */
+        .counter-section {
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .counter-title {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 16px;
+        }
+
+        .counter-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .touch-counter {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, var(--primary-red), #8B0000);
+            border: none;
+            color: white;
+            font-size: 32px;
+            font-weight: 700;
+            font-family: 'Padauk', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(196, 30, 58, 0.4);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+
+        .touch-counter:active {
+            transform: scale(0.95);
+            box-shadow: 0 4px 15px rgba(196, 30, 58, 0.4);
+        }
+
+        .reset-btn {
+            padding: 8px 24px;
+            border-radius: 12px;
+            border: 2px solid var(--text-light);
+            background: transparent;
+            color: var(--text-gray);
+            font-family: 'Padauk', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .reset-btn:hover {
+            border-color: var(--primary-red);
+            color: var(--primary-red);
+        }
+
+        /* ===== Gatha List Section ===== */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 20px 0 12px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .gatha-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .gatha-card {
+            background: var(--card-white);
+            border-radius: 14px;
+            padding: 12px 8px;
+            box-shadow: var(--shadow-soft);
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gatha-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .gatha-card.today {
+            border: 2px solid var(--accent-green);
+        }
+
+        .gatha-card.today::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-green);
+        }
+
+        .gatha-card.vegetarian::after {
+            content: '🌱';
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            font-size: 12px;
+        }
+
+        .gatha-day-num {
+            width: 24px;
+            height: 24px;
+            background: var(--bg-cream);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-gray);
+        }
+
+        .gatha-card.today .gatha-day-num {
+            background: var(--accent-green);
+            color: white;
+        }
+
+        .gatha-card-day {
+            font-size: 11px;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        .gatha-card-name {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-gold);
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .gatha-card-count {
+            font-size: 10px;
+            color: var(--text-light);
+        }
+
+        .gatha-card-date {
+            font-size: 9px;
+            color: var(--text-light);
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+        }
+
+        .gatha-card-date i {
+            font-size: 8px;
+        }
+
+        .vegetarian-notice {
+            background: linear-gradient(135deg, #E8F5E9, #C8E6C9);
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--accent-green);
+        }
+
+        .dark .vegetarian-notice {
+            background: linear-gradient(135deg, #1B4332, #2D5A45);
+        }
+
+        /* ===== Bottom Navigation ===== */
+        .bottom-nav {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card-white);
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+            padding: 8px 12px;
+            display: flex;
+            gap: 6px;
+            z-index: 1000;
+            max-width: calc(100% - 32px);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 14px;
+            border-radius: 18px;
+            cursor: pointer;
+            transition: var(--transition);
+            min-width: 54px;
+        }
+
+        .nav-item i {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-bottom: 4px;
+            transition: var(--transition);
+        }
+
+        .nav-item span {
+            font-size: 8px;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, var(--primary-red), #8B0000);
+        }
+
+        .nav-item.active i,
+        .nav-item.active span {
+            color: white;
+        }
+
+        .nav-item:not(.active):hover {
+            background: var(--bg-cream);
+        }
+
+        /* ===== Screens ===== */
+        .screen {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== အဓိဌာန် Screen ===== */
+        .adhithan-content {
+            line-height: 1.8;
+            font-size: 15px;
+            color: var(--text-dark);
+        }
+
+        .adhithan-content p {
+            margin-bottom: 16px;
+        }
+
+        .adhithan-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn-primary {
+            padding: 14px 24px;
+            border-radius: 50px;
+            border: none;
+            background: linear-gradient(135deg, var(--primary-red), #8B0000);
+            color: white;
+            font-family: 'Padauk', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(196, 30, 58, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(196, 30, 58, 0.4);
+        }
+
+        .btn-secondary {
+            padding: 14px 24px;
+            border-radius: 50px;
+            border: 2px solid var(--primary-red);
+            background: transparent;
+            color: var(--primary-red);
+            font-family: 'Padauk', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-red);
+            color: white;
+        }
+
+        /* ===== ဇယား Screen ===== */
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .schedule-table th {
+            background: var(--bg-cream-dark);
+            padding: 12px 8px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .schedule-table td {
+            padding: 10px 8px;
+            border-bottom: 1px solid var(--bg-cream-dark);
+            color: var(--text-gray);
+        }
+
+        .schedule-table tr.today-row {
+            background: rgba(46, 139, 87, 0.1);
+        }
+
+        .schedule-table tr.vegetarian-row td {
+            color: var(--accent-green);
+        }
+
+        /* ===== List Screen ===== */
+        .list-item {
+            background: var(--card-white);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: var(--shadow-soft);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .list-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .list-item-icon {
+            width: 46px;
+            height: 46px;
+            background: linear-gradient(135deg, var(--accent-gold), #B8860B);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .list-item-text {
+            flex: 1;
+        }
+
+        .list-item-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .list-item-subtitle {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 2px;
+        }
+
+        .list-item-arrow {
+            color: var(--text-light);
+        }
+
+        /* ===== Content Screen ===== */
+        .content-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            border: none;
+            background: var(--card-white);
+            color: var(--text-dark);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            background: var(--bg-cream-dark);
+        }
+
+        .content-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            flex: 1;
+        }
+
+        .font-size-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            border: none;
+            background: var(--card-white);
+            color: var(--text-gray);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-soft);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .content-body {
+            background: var(--card-white);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow-soft);
+            line-height: 2;
+            white-space: pre-wrap;
+        }
+
+        /* ===== Settings Screen ===== */
+        .setting-item {
+            background: var(--card-white);
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .setting-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .setting-label i {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-cream);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+        }
+
+        /* ===== Dialog Styles ===== */
+        .dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .dialog-overlay.active {
+            display: flex;
+        }
+
+        .dialog {
+            background: var(--card-white);
+            border-radius: 20px;
+            padding: 24px;
+            width: 100%;
+            max-width: 340px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dialog-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .dialog-content {
+            margin-bottom: 20px;
+        }
+
+        .dialog-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .dialog-btn {
+            padding: 10px 24px;
+            border-radius: 12px;
+            border: none;
+            font-family: 'Padauk', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .dialog-btn-cancel {
+            background: var(--bg-cream-dark);
+            color: var(--text-gray);
+        }
+
+        .dialog-btn-confirm {
+            background: var(--primary-red);
+            color: white;
+        }
+
+        /* Calendar Input */
+        .calendar-input {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: 2px solid var(--bg-cream-dark);
+            font-family: 'Padauk', sans-serif;
+            font-size: 16px;
+            color: var(--text-dark);
+            background: var(--card-white);
+            cursor: pointer;
+        }
+
+        .calendar-input:focus {
+            outline: none;
+            border-color: var(--primary-red);
+        }
+
+        /* Select Dropdown */
+        .select-dropdown {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: 2px solid var(--bg-cream-dark);
+            font-family: 'Padauk', sans-serif;
+            font-size: 16px;
+            color: var(--text-dark);
+            background: var(--card-white);
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+        }
+
+        /* ===== Not Started State ===== */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .empty-state-icon {
+            font-size: 60px;
+            margin-bottom: 16px;
+        }
+
+        .empty-state-text {
+            font-size: 15px;
+            color: var(--text-gray);
+            margin-bottom: 24px;
+        }
+
+        /* ===== Utility Classes ===== */
+        .hidden {
+            display: none !important;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-16 {
+            margin-top: 16px;
+        }
+
+        .mb-16 {
+            margin-bottom: 16px;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 360px) {
+            .gatha-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+
+            .nav-item {
+                padding: 8px 10px;
+                min-width: 48px;
+            }
+
+            .nav-item span {
+                font-size: 9px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== AppBar ===== -->
+    <header class="app-bar" id="appBar">
+        <div class="app-bar-left">
+            <div class="buddha-logo">☸</div>
+            <h1 class="app-title">ဓမ္မဒါန ဘုရားရှိခိုး</h1>
+        </div>
+        <div class="app-bar-actions">
+            <button class="icon-btn" id="resetAllBtn" title="အားလုံးပြန်စမည်">
+                <i class="fas fa-redo"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== Main Container ===== -->
+    <main class="container">
+
+        <!-- ===== Home Screen ===== -->
+        <section class="screen active" id="homeScreen">
+
+            <!-- Card 1: Progress -->
+            <div class="card progress-card" id="progressCard">
+                <div class="progress-circle-container">
+                    <svg class="progress-circle" viewBox="0 0 100 100">
+                        <circle class="progress-circle-bg" cx="50" cy="50" r="42"></circle>
+                        <circle class="progress-circle-fill" cx="50" cy="50" r="42"
+                                stroke-dasharray="264" stroke-dashoffset="264" id="progressCircle"></circle>
+                    </svg>
+                    <div class="progress-text">
+                        <div class="progress-percent" id="progressPercent">၀%</div>
+                    </div>
+                </div>
+                <div class="progress-info">
+                    <h3>အဓိဌာန် တိုးတက်မှု</h3>
+                    <div class="progress-stat">
+                        <span>စုစုပေါင်းရက်</span>
+                        <span>၈၁ ရက်</span>
+                    </div>
+                    <div class="progress-stat">
+                        <span>ကျန်ရှိသောရက်</span>
+                        <span id="remainingDays">၈၁ ရက်</span>
+                    </div>
+                    <div class="date-row" id="dateEditRow">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span id="dateRangeText">စတင်ရက်ရွေးပါ</span>
+                        <i class="fas fa-edit edit-icon"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Today's Info - Only shown when started -->
+            <div class="card" id="todayCard">
+                <div class="today-card-inner">
+                    <div class="today-header">
+                        <span class="today-badge">ယနေ့</span>
+                        <span class="day-badge" id="todayDayBadge">၁ ရက်</span>
+                    </div>
+                    <div class="gatha-info">
+                        <span class="gatha-label">ဂါထာတော် →</span>
+                        <span class="gatha-name" id="todayGathaName">အရဟံ</span>
+                        <span class="gatha-count" id="todayGathaCount">၁ ပတ်</span>
+                    </div>
+                </div>
+
+                <!-- Step Indicators -->
+                <div class="step-indicators" id="stepIndicators">
+                    <div class="step-circle" data-step="1">၁</div>
+                    <div class="step-circle" data-step="2">၂</div>
+                    <div class="step-circle" data-step="3">၃</div>
+                    <div class="step-circle" data-step="4">၄</div>
+                    <div class="step-circle" data-step="5">၅</div>
+                    <div class="step-circle" data-step="6">၆</div>
+                    <div class="step-circle" data-step="7">၇</div>
+                    <div class="step-circle" data-step="8">၈</div>
+                    <div class="step-circle" data-step="9">၉</div>
+                </div>
+
+                <!-- Counter Section -->
+                <div class="counter-section">
+                    <p class="counter-title">အကြိမ်ရေတွက်ရန်</p>
+                    <div class="counter-wrapper">
+                        <button class="touch-counter" id="touchCounter">၀</button>
+                        <button class="reset-btn" id="resetCounterBtn">ပြန်စမည်</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section: Gatha List -->
+            <div id="gathaSection">
+                <div class="section-header">
+                    <h2 class="section-title" id="gathaListTitle">ပထမအဆင့် ဂါထာတော်များ</h2>
+                </div>
+                <div class="gatha-grid" id="gathaGrid">
+                    <!-- Populated by JS -->
+                </div>
+                <div class="vegetarian-notice hidden" id="vegetarianNotice">
+                    <span>🌱</span>
+                    <span>ယနေ့ သားသက်လွတ်စားရမည့်နေ့ဖြစ်သည်။</span>
+                </div>
+            </div>
+
+            <!-- Empty State when not started -->
+            <div class="empty-state hidden" id="emptyState">
+                <div class="empty-state-icon">☸</div>
+                <p class="empty-state-text">
+                    အဓိဌာန် စတင်ရန် အောက်ပါ<br>"အဓိဌာန်" ခလုတ်ကို နှိပ်ပါ
+                </p>
+            </div>
+        </section>
+
+        <!-- ===== အဓိဌာန် Screen ===== -->
+        <section class="screen" id="adhithanScreen">
+            <div class="card">
+                <h2 class="section-title mb-16">အဓိဌာန်</h2>
+                <div class="adhithan-content">
+                    <p>အဓိဋ္ဌာန် (၉) ဆင့် ရှိသည်။</p>
+                    <p>တစ်ဆင့်လျှင် (၉) ရက်နှုန်းဖြင့် (၈၁) ရက် မပျက်မကွက် ဝင်ရမည်။</p>
+                    <p>တစ်ဆင့်လျှင် သင်၏ အရေးကြီးဆုံး ကိစ္စတစ်ခုကို ဆုတောင်းနိုင်ပါသည်။</p>
+                    <p>အဓိဋ္ဌာန် (၉) ဆင့် အောင်မြင်ချိန်၌ သင်၏ ဆုတောင်းများ အံ့ဩဖွယ်ရာ ပြည့်ဝနေလိမ့်မည်ဟု ရဲရဲကြီး ယုံကြည်ပါ။</p>
+                    <p>ဖော်ပြထားသော ဂုဏ်တော်အမှတ်စဉ်အတိုင်း စိပ်ပါ။</p>
+                    <p>မည်သည့်နေ့တွင် မွေးဖွားသော သားသမီးမဆို <strong>တနင်္လာနေ့</strong>မှ စ၍ အဓိဋ္ဌာန် ဝင်ရမည်။</p>
+                    <p>ဂုဏ်တော်ကိုးပါးဖြင့် လောကီအကျိုးစီးပွား အောင်မြင် ဖြစ်ထွန်းစေသော အဓိဋ္ဌာန် ဖြစ်သည်။</p>
+                </div>
+                <div class="adhithan-buttons">
+                    <button class="btn-primary" id="startAdhithanBtn">
+                        <i class="fas fa-play"></i> အဓိဌာန်စမည်
+                    </button>
+                    <button class="btn-secondary" id="continueAdhithanBtn">
+                        <i class="fas fa-forward"></i> ရောက်ရှိနေသောအဓိဌာန်မှစမည်
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ဇယား Screen ===== -->
+        <section class="screen" id="scheduleScreen">
+            <div class="card">
+                <h2 class="section-title mb-16">အဓိဌာန် ဇယား</h2>
+                <div id="scheduleContent">
+                    <p class="text-center" style="color: var(--text-gray); padding: 20px;">
+                        အဓိဌာန် စတင်ပြီးမှ ဇယားကို ကြည့်ရှုနိုင်မည်ဖြစ်သည်။
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ဘုရားရှိခိုး List Screen ===== -->
+        <section class="screen" id="prayerListScreen">
+            <div class="list-item" data-content="prayer">
+                <div class="list-item-icon">
+                    <i class="fas fa-praying-hands"></i>
+                </div>
+                <div class="list-item-text">
+                    <div class="list-item-title">ဘုရားရှိခိုး</div>
+                    <div class="list-item-subtitle">ဘုရားရှိခိုးနည်း</div>
+                </div>
+                <i class="fas fa-chevron-right list-item-arrow"></i>
+            </div>
+            <div class="list-item" data-content="invite">
+                <div class="list-item-icon">
+                    <i class="fas fa-hand-holding-heart"></i>
+                </div>
+                <div class="list-item-text">
+                    <div class="list-item-title">ဘုရားပင့်</div>
+                    <div class="list-item-subtitle">ဘုရားပင့်နည်း</div>
+                </div>
+                <i class="fas fa-chevron-right list-item-arrow"></i>
+            </div>
+            <div class="list-item" data-content="aneka">
+                <div class="list-item-icon">
+                    <i class="fas fa-om"></i>
+                </div>
+                <div class="list-item-text">
+                    <div class="list-item-title">အနေကဇာတင်</div>
+                    <div class="list-item-subtitle">အနေကဇာတင်နည်း</div>
+                </div>
+                <i class="fas fa-chevron-right list-item-arrow"></i>
+            </div>
+            <div class="list-item" data-content="gatha">
+                <div class="list-item-icon">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div class="list-item-text">
+                    <div class="list-item-title">ဂါထာတော်</div>
+                    <div class="list-item-subtitle">ဂုဏ်တော်ကိုးပါး</div>
+                </div>
+                <i class="fas fa-chevron-right list-item-arrow"></i>
+            </div>
+        </section>
+
+        <!-- ===== Content Screen ===== -->
+        <section class="screen" id="contentScreen">
+            <div class="content-header">
+                <button class="back-btn" id="backBtn">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2 class="content-title" id="contentTitle">ဘုရားရှိခိုး</h2>
+                <button class="font-size-btn" id="fontSizeBtn">
+                    <i class="fas fa-text-height"></i>
+                </button>
+            </div>
+            <div class="card content-body" id="contentBody">
+                <!-- Content populated by JS -->
+            </div>
+        </section>
+
+        <!-- ===== Settings Screen ===== -->
+        <section class="screen" id="settingsScreen">
+            <h2 class="section-title mb-16">စက်တင်</h2>
+            <div class="setting-item">
+                <div class="setting-label">
+                    <i class="fas fa-info-circle"></i>
+                    <span>ဗားရှင်း</span>
+                </div>
+                <span style="color: var(--text-light);">1.0.0</span>
+            </div>
+            <div class="setting-item">
+                <div class="setting-label">
+                    <i class="fas fa-heart"></i>
+                    <span>ဓမ္မဒါန အဖြစ်ဖြန့်ဝေပါ</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== Bottom Navigation ===== -->
+    <nav class="bottom-nav">
+        <div class="nav-item active" data-screen="homeScreen">
+            <i class="fas fa-home"></i>
+            <span>ပင်မ</span>
+        </div>
+        <div class="nav-item" data-screen="adhithanScreen">
+            <i class="fas fa-dharmachakra"></i>
+            <span>အဓိဌာန်</span>
+        </div>
+        <div class="nav-item" data-screen="scheduleScreen">
+            <i class="fas fa-calendar-check"></i>
+            <span>ဇယား</span>
+        </div>
+        <div class="nav-item" data-screen="prayerListScreen">
+            <i class="fas fa-praying-hands"></i>
+            <span>ဘုရားရှိခိုး</span>
+        </div>
+        <div class="nav-item" data-screen="settingsScreen">
+            <i class="fas fa-cog"></i>
+            <span>စက်တင်</span>
+        </div>
+    </nav>
+
+    <!-- ===== Calendar Dialog ===== -->
+    <div class="dialog-overlay" id="calendarDialog">
+        <div class="dialog">
+            <h3 class="dialog-title">စတင်ရက်ပြင်ရန်</h3>
+            <div class="dialog-content">
+                <input type="date" class="calendar-input" id="startDateInput">
+                <p style="font-size: 12px; color: var(--text-light); margin-top: 8px; text-align: center;">
+                    * တနင်္လာနေ့မှသာ စတင်နို���်ပါသည်
+                </p>
+            </div>
+            <div class="dialog-actions">
+                <button class="dialog-btn dialog-btn-cancel" id="cancelDateBtn">ပိတ်မည်</button>
+                <button class="dialog-btn dialog-btn-confirm" id="saveDateBtn">သိမ်းမည်</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== Continue Dialog ===== -->
+    <div class="dialog-overlay" id="continueDialog">
+        <div class="dialog">
+            <h3 class="dialog-title">ရောက်ရှိနေသောအဆင့်ရွေးရန်</h3>
+            <div class="dialog-content">
+                <select class="select-dropdown" id="stepSelect">
+                    <option value="1">ပထမအဆင့်</option>
+                    <option value="2">ဒုတိယအဆင့်</option>
+                    <option value="3">တတိယအဆင့်</option>
+                    <option value="4">စတုတ္ထအဆင့်</option>
+                    <option value="5">ပဉ္စမအဆင့်</option>
+                    <option value="6">ဆဌမအဆင့်</option>
+                    <option value="7">သတ္တမအဆင့်</option>
+                    <option value="8">အဋ္ဌမအဆင့်</option>
+                    <option value="9">န၀မအဆင့်</option>
+                </select>
+                <div class="card mt-16" style="padding: 12px;">
+                    <p style="font-size: 13px; color: var(--text-gray);">ယနေ့ ပုတီးစိပ်ရမယ့် ဂါထာတော်</p>
+                    <p style="font-size: 16px; font-weight: 700; color: var(--accent-gold);" id="selectedGatha">-</p>
+                </div>
+            </div>
+            <div class="dialog-actions">
+                <button class="dialog-btn dialog-btn-cancel" id="cancelContinueBtn">ပိတ်မည်</button>
+                <button class="dialog-btn dialog-btn-confirm" id="confirmContinueBtn">စတင်မည်</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== Alert Dialog ===== -->
+    <div class="dialog-overlay" id="alertDialog">
+        <div class="dialog">
+            <h3 class="dialog-title" id="alertTitle">အသိပေးချက်</h3>
+            <div class="dialog-content">
+                <p id="alertMessage" style="text-align: center; color: var(--text-gray);"></p>
+            </div>
+            <div class="dialog-actions">
+                <button class="dialog-btn dialog-btn-confirm" id="alertOkBtn">အိုကေ</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== Confirm Dialog ===== -->
+    <div class="dialog-overlay" id="confirmDialog">
+        <div class="dialog">
+            <h3 class="dialog-title" id="confirmTitle">အတည်ပြုရန်</h3>
+            <div class="dialog-content">
+                <p id="confirmMessage" style="text-align: center; color: var(--text-gray);"></p>
+            </div>
+            <div class="dialog-actions">
+                <button class="dialog-btn dialog-btn-cancel" id="confirmCancelBtn">မလုပ်ပါ</button>
+                <button class="dialog-btn dialog-btn-confirm" id="confirmOkBtn">လုပ်မည်</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== Vegetarian Dialog ===== -->
+    <div class="dialog-overlay" id="vegetarianDialog">
+        <div class="dialog">
+            <h3 class="dialog-title">🌱 သတိပေးချက်</h3>
+            <div class="dialog-content">
+                <p style="text-align: center; color: var(--accent-green); font-size: 16px;">
+                    ယနေ့ သားသက်လွတ်စားရမည့်နေ့ဖြစ်သည်။
+                </p>
+            </div>
+            <div class="dialog-actions">
+                <button class="dialog-btn dialog-btn-confirm" id="vegetarianOkBtn">သိပါပြီ</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== မြန်မာ နံပါတ် ပြောင်းရန် =====
+        const myanmarNumbers = ['၀', '၁', '၂', '၃', '၄', '၅', '၆', '၇', '၈', '၉'];
+
+        function toMyanmarNumber(num) {
+            return String(num).split('').map(d => myanmarNumbers[parseInt(d)] || d).join('');
+        }
+
+        // ===== မြန်မာ ရက် နာမည်များ =====
+        const myanmarDays = ['တနင်္ဂနွေ', 'တနင်္လာ', 'အင်္ဂါ', 'ဗုဒ္ဓဟူး', 'ကြာသပတေး', 'သောကြာ', 'စနေ'];
+        const myanmarDaysShort = ['နွေ', 'လာ', 'ဂါ', 'ဟူး', 'တေး', 'ကြာ', 'နေ'];
+
+        // ===== အဆင့် နာမည်များ =====
+        const stepNames = [
+            'ပထမအဆင့်', 'ဒုတိယအဆင့်', 'တတိယအဆင့်', 'စတုတ္ထအဆင့်', 'ပဉ္စမအဆင့်',
+            'ဆဌမအဆင့်', 'သတ္တမအဆင့်', 'အဋ္ဌမအဆင့်', 'န၀မအဆင့်'
+        ];
+
+        // ===== ၉ အဆင့် ဂါထာတော် Data =====
+        const gathaData = {
+            1: [
+                { day: 'တနင်္လာ', gatha: 'သမ္မာသမ္ဗုဒ္ဓေါ', count: '၂ ပတ်' },
+                { day: 'အင်္ဂါ', gatha: 'ဘဂဝါ', count: '၉ ပတ်' },
+                { day: 'ဗုဒ္ဓဟူး', gatha: 'သုဂတော', count: '၄ ပတ်' },
+                { day: 'ကြာသပတေး', gatha: 'သတ္ထာဒေဝမနုဿာနံ', count: '၇ ပတ်' },
+                { day: 'သောကြာ', gatha: 'လောကဝိဒူ', count: '၅ ပတ်' },
+                { day: 'စနေ', gatha: 'ဝိဇ္ဇာစရဏသမ္ပန္နော', count: '၃ ပတ်' },
+                { day: 'တနင်္ဂနွေ', gatha: 'အနုတ္တရောပုရိသ ဒမ္မသာရထိ', count: '၆ ပတ်' },
+                { day: 'တနင်္လာ', gatha: 'အရဟံ', count: '၁ ပတ်' },
+                { day: 'အင်္ဂါ', gatha: 'ဗုဒ္ဓေါ', count: '၈ ပတ်' }
+            ],
+            2: [
+                { day: 'ဗုဒ္ဓဟူး', gatha: 'ဝိဇ္ဇာစရဏသမ္ပန္နော', count: '၃ ပတ်' },
+                { day: 'ကြာသပတေး', gatha: 'အရဟံ', count: '၁ ပတ်' },
+                { day: 'သောကြာ', gatha: 'လောကဝိဒူ', count: '၅ ပတ်' },
+                { day: 'စနေ', gatha: 'ဗုဒ္ဓေါ', count: '၈ ပတ်' },
+                { day: 'တနင်္ဂနွေ', gatha: 'အနုတ္တရောပုရိသ ဒမ္မသာရထိ', count: '၆ ပတ်' },
+                { day: 'တနင်္လာ', gatha: 'သုဂတော', count: '၄ ပတ်' },
+                { day: 'အင်္ဂါ', gatha: 'သတ္ထာဒေဝမနုဿာနံ', count: '၇ ပတ်' },
+                { day: 'ဗုဒ္ဓဟူး', gatha: 'သမ္မာသမ္ဗုဒ္ဓေါ', count: '၂ ပတ်' },
+                { day: 'ကြာသပတေး', gatha: 'ဘဂဝါ', count: '၉ ပတ်' }
+            ],
+            3: [
+                { day: 'သောကြာ', gatha: 'သုဂတော', count: '၄ ပတ်' },
+                { day: 'စနေ', gatha: 'သမ္မာသမ္ဗုဒ္ဓေါ', count: '၂ ပတ်' },
+                { day: 'တနင်္ဂနွေ', gatha: 'အနုတ္တရောပုရိသ ဒမ္မသာရထိ', count: '၆ ပတ်' },
+                { day: 'တနင်���လာ', gatha: 'ဘဂဝါ', count: '၉ ပတ်' },
+                { day: 'အင်္ဂါ', gatha: 'သတ္ထာဒေဝမနုဿာနံ', count: '၇ ပတ်' },
+                { day: 'ဗုဒ္ဓဟူး', gatha: 'လောကဝိဒူ', count: '၅ ပတ်' },
+                { day: 'ကြာသပတေး', gatha: 'ဗုဒ္ဓေါ', count: '၈ ပတ်' },
+                { day: 'သောကြာ', gatha: 'ဝိဇ္ဇာစရဏသမ္ပန္နော', count: '၃ ပတ်' },
+                { day: 'စနေ', gatha: 'အရဟံ', count: '၁ ပတ်' }
+            ],
+            4: [
+                { day: 'တနင်္ဂနွေ', gatha: 'လောကဝိဒူ', count: '၅ ပတ်' },
+                { day: 'တနင်္လာ', gatha: 'ဝိဇ္ဇာစရဏသမ္ပန္နော', count: '၃ ပတ်' },
+                { day: 'အင်္ဂါ', gatha: 'သတ္ထာဒေဝမနုဿာနံ', count: '၇ ပတ်' },
+                { day: 'ဗုဒ္ဓဟူး', gatha: 'အရဟံ', count: '၁ ပတ်' },
+                { day: 'ကြာသပတေး', gatha: 'ဗုဒ္ဓေါ', count: '၈ ပတ်' },
+                { day: 'သောကြာ', gatha: 'အနုတ္တရောပုရိသ ဒမ္မသာရထိ', count: '၆ ပတ်' },
+                { day: 'စနေ', gatha: 'ဘဂဝါ', count: '၉ ပတ်' },
+                { day: 'တနင်္ဂနွေ', gatha: 'သုဂတော', count: '၄ ပတ်' },
+                { day: 'တနင်္လာ', gatha: 'သမ္မာသမ္ဗုဒ္ဓေါ', count: '၂ ပတ်' }
+            ],
+            5: [
+                { day: 'အင်္ဂါ', gatha: 'အနုတ္တရောပုရိသ ဒမ္မသာရထိ', count: '၆ ပတ်' },
+                { day: 'ဗုဒ္ဓဟူး', gatha: 'သုဂတော', count: '၄ ပတ်' },
+                { day: 'ကြာသပတေး', gatha: 'ဗုဒ္ဓေါ', count: '၈ ပတ်' },
+                { day: 'သောကြာ', gatha: 'သမ္မာသမ္ဗုဒ္ဓေါ', count: '၂ ပတ်' },
+                { day: 'စနေ', gatha: 'ဘဂဝါ', count: '၉ ပတ်' },
+                { day: 'တနင်္ဂနွေ', gatha: 'သတ္ထာဒေဝမနုဿာနံ', count: '၇ ပတ်' },
+                { day: 'တနင်္လာ', gatha: 'အရဟံ', count: '၁ ပတ်' },
+                { day: 'အင်္ဂါ', gatha: 'လောကဝိဒူ', count: '၅ ပတ်' },
+                { day: 'ဗုဒ္ဓဟူး', gatha: 'ဝိဇ္ဇာစရဏသမ္ပန္နော', count: '၃ ပတ်' }
+            ],
+            6: [
+                { day: 'ကြာသပတေး', gatha: 'သတ္ထာဒေဝမနုဿာနံ', count: '၇ ပတ်' },
+                { day: 'သောကြာ', gatha: 'လောကဝိဒူ', count: '၅ ပတ်' },
+                { day: 'စနေ', gatha: 'ဘဂဝါ', count: '၉ ပတ်' },
+                { day: 'တနင်္ဂနွေ', gatha: 'ဝိဇ္ဇာစရဏသမ္ပန္နော', count: '၃ ပတ်' },
+                { day: 'တနင်္လာ', gatha: 'အရဟံ', count: '၁ ပတ်' },
+                { day: 'အင်္ဂါ', gatha: 'ဗုဒ္ဓေါ', count: '၈ ပတ်' },
+                { day: 'ဗုဒ္ဓဟူး', gatha: 'သမ္မာသမ္ဗုဒ္ဓေါ', count: '၂ ပတ်' },
+                { day: 'ကြာသပတေး', gatha: 'အနုတ္တရောပုရိသ ဒမ္မသာရထိ', count: '၆ ပတ်' },
+                { day: 'သောကြာ', gatha: 'သုဂတော', count: '၄ ပတ်' }
+            ],
+            7: [
+                { day: 'စနေ', gatha: 'ဗုဒ္ဓေါ', count: '၈ ပတ်' },
+                { day: 'တနင်္ဂနွေ', gatha: 'အနုတ္တရောပုရိသ ဒမ္မသာရထိ', count: '၆ ပတ်' },
+                { day: 'တနင်္လာ', gatha: 'အရဟံ', count: '၁ ပတ်' },
+                { day: 'အင်္ဂါ', gatha: 'သုဂတော', count: '၄ ပတ်' },
+                { day: 'ဗုဒ္ဓဟူး', gatha: 'သမ္မာသမ္ဗုဒ္ဓေါ', count: '၂ ပတ်' },
+                { day: 'ကြာသပတေး', gatha: 'ဘဂဝါ', count: '၉ ပတ်' },
+                { day: 'သောကြာ', gatha: 'ဝိဇ္ဇာစရဏသမ္ပန္နော', count: '၃ ပတ်' },
+                { day: 'စနေ', gatha: 'သတ္ထာဒေဝမနုဿာနံ', count: '၇ ပတ်' },
+                { day: 'တနင်္ဂနွေ', gatha: 'လောကဝိဒူ', count: '၅ ပတ်' }
+            ],
+            8: [
+                { day: 'တနင်္လာ', gatha: 'ဘဂဝါ', count: '၉ ပတ်' },
+                { day: 'အင်္ဂါ', gatha: 'သတ္ထာဒေဝမနုဿာနံ', count: '၇ ပတ်' },
+                { day: 'ဗုဒ္ဓဟူး', gatha: 'သမ္မာသမ္ဗုဒ္ဓေါ', count: '၂ ပတ်' },
+                { day: 'ကြာသပတေး', gatha: 'လောကဝိဒူ', count: '၅ ပတ်' },
+                { day: 'သောကြာ', gatha: 'ဝိဇ္ဇာစရဏသမ္ပန္နော', count: '၃ ပတ်' },
+                { day: 'စနေ', gatha: 'အရဟံ', count: '၁ ပတ်' },
+                { day: 'တနင်္ဂနွေ', gatha: 'သုဂတော', count: '၄ ပတ်' },
+                { day: 'တနင်္လာ', gatha: 'ဗုဒ္ဓေါ', count: '၈ ပတ်' },
+                { day: 'အင်္ဂါ', gatha: 'အနုတ္တရောပုရိသ ဒမ္မသာရထိ', count: '၆ ပတ်' }
+            ],
+            9: [
+                { day: 'ဗုဒ္ဓဟူး', gatha: 'အရဟံ', count: '၁ ပတ်' },
+                { day: 'ကြာသပတေး', gatha: 'ဗုဒ္ဓေါ', count: '၈ ပတ်' },
+                { day: 'သောကြာ', gatha: 'ဝိဇ္ဇာစရဏသမ္ပန္နော', count: '၃ ပတ်' },
+                { day: 'စနေ', gatha: 'အနုတ္တရောပုရိသ ဒမ္မသာရထိ', count: '၆ ပတ်' },
+                { day: 'တနင်္ဂနွေ', gatha: 'သုဂတော', count: '၄ ပတ်' },
+                { day: 'တနင်္လာ', gatha: 'သမ္မာသမ္ဗုဒ္ဓေါ', count: '၂ ပတ်' },
+                { day: 'အင်္ဂါ', gatha: 'လောကဝိဒူ', count: '၅ ပတ်' },
+                { day: 'ဗုဒ္ဓဟူး', gatha: 'ဘဂဝါ', count: '၉ ပတ်' },
+                { day: 'ကြာသပတေး', gatha: 'သတ္ထာဒေဝမနုဿာနံ', count: '၇ ပတ်' }
+            ]
+        };
+
+        // ===== ဘုရားရှိခိုး Content Data =====
+        const contentData = {
+            prayer: {
+                title: 'ဘုရားရှိခိုး',
+                content: `အရဟံ သမ္မာသမ္ဗုဒ္ဓေါ ဘဂဝါ၊
+ဗုဒ္ဓံ ဘဂဝန္တံ အဘိဝါဒေမိ။
+
+(ရှိခိုးပါ၏ ဘုရား)
+
+သွာက္ခါတော ဘဂဝတာ ဓမ္မော၊
+ဓမ္မံ နမဿာမိ။
+
+(ရှိခိုးပါ၏ တရား)
+
+သုပဋိပန္နော ဘဂဝတော သာဝကသံဃော၊
+သံဃံ နမာမိ။
+
+(ရှိခိုးပါ၏ သံဃာ)`
+            },
+            invite: {
+                title: 'ဘုရားပင့်',
+                content: `သီလဝန္တာ ဘဝန္တု ���ာစရိယာ၊
+မိစ္ဆာဒိဋ္ဌိ နဝိဇ္ဇာ ဗဟုလာ ဟောန္တု၊
+ရတနတ္တယသ္မိံ သမ္မာ ပသာဒေန္တု။
+
+အရဟန္တံ ဒေဝမနုဿာနံ၊
+ဓမ္မဿ သာသနံ ဝဍ္ဎေတု။
+
+သာဓု သာဓု သာဓု`
+            },
+            aneka: {
+                title: 'အနေကဇာတင်',
+                content: `အနေကဇာတိ သံသာရံ၊
+သန္ဓာဝိဿံ အနိဗ္ဗိသံ။
+ဂဟကာရကံ ဂဝေသန္တော၊
+ဒုက္ခါ ဇာတိ ပုနပ္ပုနံ။
+
+ဂဟကာရက ဒိဋ္ဌောသိ၊
+ပုန ဂေဟံ န ကာဟသိ။
+သဗ္ဗာ တေ ဖာသုကာ ဘဂ္ဂါ၊
+ဂဟကူဋံ ဝိသင်္ခတံ။
+ဝိသင်္ခါရဂတံ စိတ္တံ၊
+တဏှာနံ ခယ မဇ္ဈဂါ။`
+            },
+            gatha: {
+                title: 'ဂါထာတော် (ဂုဏ်တော်ကိုးပါး)',
+                content: `၁။ အရဟံ - ရန်သူ ကိလေသာတို့ကို ပယ်သတ်တော်မူသော ဘုရား
+
+၂။ သမ္မာသမ္ဗုဒ္ဓေါ - အလုံးစုံသော တရားတို့ကို ကိုယ်တော်တိုင် မှန်စွာ သိတော်မူသော ဘုရား
+
+၃။ ဝိဇ္ဇာစရဏသမ္ပန္နော - အသိဉာဏ် အကျင့်တို့နှင့် ပြည့်စုံတော်မူသော ဘုရား
+
+၄။ သုဂတော - ကောင်းသော စကားကို ဆိုတော်မူသော ဘုရား
+
+၅။ လောကဝိဒူ - လောကကို သိတော်မူသော ဘုရား
+
+၆။ အနုတ္တရော ပုရိသဒမ္မသာရထိ - ယဉ်ကျေးစေထိုက်သော သူတို့ကို အတုမရှိ ယဉ်ကျေးစေတတ်တော်မူသော ဘုရား
+
+၇။ သတ္ထာ ဒေဝမနုဿာနံ - နတ်လူတို့၏ ဆရာဖြစ်တော်မူသော ဘုရား
+
+၈။ ဗုဒ္ဓေါ - သစ္စာလေးပါးကို သိတော်မူသော ဘုရား
+
+၉။ ဘဂဝါ - ဘုန်းတန်ခိုး ပြည့်စုံတော်မူသော ဘုရား`
+            }
+        };
+
+        // ===== App State =====
+        let appState = {
+            startDate: null,
+            currentDay: 0,
+            currentStep: 1,
+            counter: 0,
+            isStarted: false,
+            fontSize: 14,
+            vegetarianShown: false
+        };
+
+        // ===== DOM Elements =====
+        const elements = {
+            screens: document.querySelectorAll('.screen'),
+            navItems: document.querySelectorAll('.nav-item'),
+            progressCircle: document.getElementById('progressCircle'),
+            progressPercent: document.getElementById('progressPercent'),
+            remainingDays: document.getElementById('remainingDays'),
+            dateRangeText: document.getElementById('dateRangeText'),
+            dateEditRow: document.getElementById('dateEditRow'),
+            todayCard: document.getElementById('todayCard'),
+            todayDayBadge: document.getElementById('todayDayBadge'),
+            todayGathaName: document.getElementById('todayGathaName'),
+            todayGathaCount: document.getElementById('todayGathaCount'),
+            stepIndicators: document.getElementById('stepIndicators'),
+            touchCounter: document.getElementById('touchCounter'),
+            resetCounterBtn: document.getElementById('resetCounterBtn'),
+            gathaSection: document.getElementById('gathaSection'),
+            gathaListTitle: document.getElementById('gathaListTitle'),
+            gathaGrid: document.getElementById('gathaGrid'),
+            vegetarianNotice: document.getElementById('vegetarianNotice'),
+            emptyState: document.getElementById('emptyState'),
+            calendarDialog: document.getElementById('calendarDialog'),
+            startDateInput: document.getElementById('startDateInput'),
+            cancelDateBtn: document.getElementById('cancelDateBtn'),
+            saveDateBtn: document.getElementById('saveDateBtn'),
+            continueDialog: document.getElementById('continueDialog'),
+            stepSelect: document.getElementById('stepSelect'),
+            selectedGatha: document.getElementById('selectedGatha'),
+            cancelContinueBtn: document.getElementById('cancelContinueBtn'),
+            confirmContinueBtn: document.getElementById('confirmContinueBtn'),
+            startAdhithanBtn: document.getElementById('startAdhithanBtn'),
+            continueAdhithanBtn: document.getElementById('continueAdhithanBtn'),
+            alertDialog: document.getElementById('alertDialog'),
+            alertTitle: document.getElementById('alertTitle'),
+            alertMessage: document.getElementById('alertMessage'),
+            alertOkBtn: document.getElementById('alertOkBtn'),
+            confirmDialog: document.getElementById('confirmDialog'),
+            confirmTitle: document.getElementById('confirmTitle'),
+            confirmMessage: document.getElementById('confirmMessage'),
+            confirmCancelBtn: document.getElementById('confirmCancelBtn'),
+            confirmOkBtn: document.getElementById('confirmOkBtn'),
+            vegetarianDialog: document.getElementById('vegetarianDialog'),
+            vegetarianOkBtn: document.getElementById('vegetarianOkBtn'),
+            resetAllBtn: document.getElementById('resetAllBtn'),
+            listItems: document.querySelectorAll('.list-item'),
+            backBtn: document.getElementById('backBtn'),
+            contentTitle: document.getElementById('contentTitle'),
+            contentBody: document.getElementById('contentBody'),
+            fontSizeBtn: document.getElementById('fontSizeBtn'),
+            scheduleContent: document.getElementById('scheduleContent'),
+            appBar: document.getElementById('appBar')
+        };
+
+        // ===== Dark Mode Detection =====
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // ===== Touch Sound Effect =====
+        function playTouchSound() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+
+                oscillator.frequency.value = 800;
+                oscillator.type = 'sine';
+                gainNode.gain.value = 0.1;
+
+                oscillator.start();
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                oscillator.stop(audioContext.currentTime + 0.1);
+            } catch (e) {
+                // Silently fail if audio context is not available
+            }
+        }
+
+        // ===== Helper Functions =====
+        function formatMyanmarDate(date) {
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            return `${toMyanmarNumber(day)}/${toMyanmarNumber(month)}/${toMyanmarNumber(year)}`;
+        }
+
+        function getDayOfWeek(date) {
+            return myanmarDays[date.getDay()];
+        }
+
+        function isMonday(date) {
+            return date.getDay() === 1;
+        }
+
+        function addDays(date, days) {
+            const result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return result;
+        }
+
+        function getDaysBetween(date1, date2) {
+            const oneDay = 24 * 60 * 60 * 1000;
+            return Math.floor((date2 - date1) / oneDay);
+        }
+
+        function showAlert(title, message) {
+            elements.alertTitle.textContent = title;
+            elements.alertMessage.textContent = message;
+            elements.alertDialog.classList.add('active');
+        }
+
+        function showConfirm(title, message, onConfirm) {
+            elements.confirmTitle.textContent = title;
+            elements.confirmMessage.textContent = message;
+            elements.confirmDialog.classList.add('active');
+
+            const confirmHandler = () => {
+                elements.confirmDialog.classList.remove('active');
+                elements.confirmOkBtn.removeEventListener('click', confirmHandler);
+                onConfirm();
+            };
+            elements.confirmOkBtn.addEventListener('click', confirmHandler);
+        }
+
+        // ===== Navigation =====
+        function switchScreen(screenId) {
+            elements.screens.forEach(screen => screen.classList.remove('active'));
+            elements.navItems.forEach(item => item.classList.remove('active'));
+
+            document.getElementById(screenId).classList.add('active');
+            document.querySelector(`[data-screen="${screenId}"]`)?.classList.add('active');
+
+            // Show/hide app bar based on screen
+            if (screenId === 'contentScreen') {
+                elements.appBar.style.display = 'none';
+            } else {
+                elements.appBar.style.display = 'flex';
+            }
+        }
+
+        elements.navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                switchScreen(item.dataset.screen);
+            });
+        });
+
+        // ===== Progress Calculation =====
+        function updateProgress() {
+            if (!appState.isStarted || !appState.startDate) {
+                elements.progressCircle.style.strokeDashoffset = 264;
+                elements.progressPercent.textContent = '၀%';
+                elements.remainingDays.textContent = '၈၁ ရက်';
+                elements.dateRangeText.textContent = 'စတင်ရက်ရွေးပါ';
+                return;
+            }
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            const startDate = new Date(appState.startDate);
+            startDate.setHours(0, 0, 0, 0);
+
+            const daysPassed = getDaysBetween(startDate, today) + 1;
+            const currentDay = Math.max(0, Math.min(daysPassed, 81));
+            const remaining = Math.max(0, 81 - currentDay);
+            const percent = Math.round((currentDay / 81) * 100);
+
+            appState.currentDay = currentDay;
+            appState.currentStep = Math.ceil(currentDay / 9) || 1;
+
+            // Update UI
+            const circumference = 264;
+            const offset = circumference - (percent / 100) * circumference;
+            elements.progressCircle.style.strokeDashoffset = offset;
+            elements.progressPercent.textContent = toMyanmarNumber(percent) + '%';
+            elements.remainingDays.textContent = toMyanmarNumber(remaining) + ' ရက်';
+
+            const endDate = addDays(startDate, 80);
+            elements.dateRangeText.textContent = `${formatMyanmarDate(startDate)} → ${formatMyanmarDate(endDate)}`;
+
+            updateStepIndicators();
+            updateTodayCard();
+            updateGathaGrid();
+            updateSchedule();
+        }
+
+        function updateStepIndicators() {
+            const circles = elements.stepIndicators.querySelectorAll('.step-circle');
+            circles.forEach((circle, index) => {
+                const step = index + 1;
+                circle.classList.remove('active', 'completed');
+                if (step === appState.currentStep) {
+                    circle.classList.add('active');
+                } else if (step < appState.currentStep) {
+                    circle.classList.add('completed');
+                }
+            });
+        }
+
+        function updateTodayCard() {
+            if (!appState.isStarted) return;
+
+            const dayInStep = ((appState.currentDay - 1) % 9) + 1;
+            const stepData = gathaData[appState.currentStep];
+            const todayData = stepData[dayInStep - 1];
+
+            if (todayData) {
+                elements.todayDayBadge.textContent = toMyanmarNumber(dayInStep) + ' ရက်';
+                elements.todayGathaName.textContent = todayData.gatha;
+                elements.todayGathaCount.textContent = todayData.count;
+            }
+
+            // Check vegetarian day (5th day of each step)
+            if (dayInStep === 5) {
+                elements.vegetarianNotice.classList.remove('hidden');
+                // Show vegetarian dialog on first load
+                if (!appState.vegetarianShown) {
+                    setTimeout(() => {
+                        elements.vegetarianDialog.classList.add('active');
+                        appState.vegetarianShown = true;
+                    }, 500);
+                }
+            } else {
+                elements.vegetarianNotice.classList.add('hidden');
+            }
+        }
+
+        function updateGathaGrid() {
+            if (!appState.isStarted) return;
+
+            elements.gathaListTitle.textContent = stepNames[appState.currentStep - 1] + ' ဂါထာတော်များ';
+
+            const stepData = gathaData[appState.currentStep];
+            const dayInStep = ((appState.currentDay - 1) % 9) + 1;
+            const startDate = new Date(appState.startDate);
+            const stepStartDay = (appState.currentStep - 1) * 9;
+
+            let html = '';
+            stepData.forEach((item, index) => {
+                const dayNum = index + 1;
+                const isToday = dayNum === dayInStep;
+                const isVegetarian = dayNum === 5;
+                const itemDate = addDays(startDate, stepStartDay + index);
+
+                html += `
+                    <div class="gatha-card ${isToday ? 'today' : ''} ${isVegetarian ? 'vegetarian' : ''}">
+                        <div class="gatha-day-num">${toMyanmarNumber(dayNum)}</div>
+                        <div class="gatha-card-day">${item.day}</div>
+                        <div class="gatha-card-name">${item.gatha}</div>
+                        <div class="gatha-card-count">${item.count}</div>
+                        <div class="gatha-card-date">
+                            <i class="fas fa-calendar"></i>
+                            ${formatMyanmarDate(itemDate)}
+                        </div>
+                    </div>
+                `;
+            });
+
+            elements.gathaGrid.innerHTML = html;
+        }
+
+        function updateSchedule() {
+            if (!appState.isStarted) {
+                elements.scheduleContent.innerHTML = `
+                    <p class="text-center" style="color: var(--text-gray); padding: 20px;">
+                        အဓိဌာန် စတင်ပြီးမှ ဇယားကို ကြည့်ရှုနိုင်မည်ဖြစ်သည်။
+                    </p>
+                `;
+                return;
+            }
+
+            const startDate = new Date(appState.startDate);
+            let html = '<div style="overflow-x: auto;"><table class="schedule-table"><thead><tr><th>ရက်</th><th>နေ့</th><th>အဆင့်</th><th>ဂါထာတော်</th><th>ရက်စွဲ</th></tr></thead><tbody>';
+
+            for (let i = 0; i < 81; i++) {
+                const currentDate = addDays(startDate, i);
+                const step = Math.floor(i / 9) + 1;
+                const dayInStep = (i % 9) + 1;
+                const stepGatha = gathaData[step][dayInStep - 1];
+                const isToday = i + 1 === appState.currentDay;
+                const isVegetarian = dayInStep === 5;
+
+                html += `
+                    <tr class="${isToday ? 'today-row' : ''} ${isVegetarian ? 'vegetarian-row' : ''}">
+                        <td>${toMyanmarNumber(i + 1)}</td>
+                        <td>${getDayOfWeek(currentDate)}</td>
+                        <td>${stepNames[step - 1]}</td>
+                        <td>${stepGatha.gatha}</td>
+                        <td>${formatMyanmarDate(currentDate)}</td>
+                    </tr>
+                `;
+            }
+
+            html += '</tbody></table></div>';
+            elements.scheduleContent.innerHTML = html;
+        }
+
+        function updateUI() {
+            if (appState.isStarted) {
+                elements.todayCard.classList.remove('hidden');
+                elements.gathaSection.classList.remove('hidden');
+                elements.emptyState.classList.add('hidden');
+            } else {
+                elements.todayCard.classList.add('hidden');
+                elements.gathaSection.classList.add('hidden');
+                elements.emptyState.classList.remove('hidden');
+            }
+            updateProgress();
+        }
+
+        // ===== Counter =====
+        elements.touchCounter.addEventListener('click', () => {
+            playTouchSound();
+            appState.counter++;
+            elements.touchCounter.textContent = toMyanmarNumber(appState.counter);
+        });
+
+        elements.resetCounterBtn.addEventListener('click', () => {
+            appState.counter = 0;
+            elements.touchCounter.textContent = '၀';
+        });
+
+        // ===== Calendar Dialog =====
+        elements.dateEditRow.addEventListener('click', () => {
+            if (appState.startDate) {
+                const d = new Date(appState.startDate);
+                elements.startDateInput.value = d.toISOString().split('T')[0];
+            }
+            elements.calendarDialog.classList.add('active');
+        });
+
+        elements.cancelDateBtn.addEventListener('click', () => {
+            elements.calendarDialog.classList.remove('active');
+        });
+
+        elements.saveDateBtn.addEventListener('click', () => {
+            const dateValue = elements.startDateInput.value;
+            if (!dateValue) {
+                showAlert('အသိပေးချက်', 'ရက်စွဲရွေးပါ။');
+                return;
+            }
+
+            const selectedDate = new Date(dateValue);
+            if (!isMonday(selectedDate)) {
+                showAlert('အသိပေးချက်', 'တနင်္လာနေ့မှသာ အဓိဌာန်စ၀င်လို့ရမည်။');
+                return;
+            }
+
+            appState.startDate = dateValue;
+            appState.isStarted = true;
+            appState.vegetarianShown = false;
+            elements.calendarDialog.classList.remove('active');
+            updateUI();
+        });
+
+        // ===== Start Adhithan =====
+        elements.startAdhithanBtn.addEventListener('click', () => {
+            elements.calendarDialog.classList.add('active');
+        });
+
+        // ===== Continue Adhithan =====
+        elements.continueAdhithanBtn.addEventListener('click', () => {
+            if (!appState.isStarted) {
+                showAlert('အသိပေးချက်', 'မိတ်ဆွေ အဓိဌာန် မ၀င်ရသေးပါ။');
+                return;
+            }
+            updateSelectedGatha();
+            elements.continueDialog.classList.add('active');
+        });
+
+        elements.stepSelect.addEventListener('change', () => {
+            updateSelectedGatha();
+        });
+
+        function updateSelectedGatha() {
+            const step = parseInt(elements.stepSelect.value);
+            const today = new Date();
+            const dayOfWeek = today.getDay();
+
+            // Find matching gatha for today's day of week
+            const stepData = gathaData[step];
+            const dayName = myanmarDays[dayOfWeek];
+            const matchingGatha = stepData.find(item => item.day === dayName);
+
+            if (matchingGatha) {
+                elements.selectedGatha.textContent = matchingGatha.gatha + ' - ' + matchingGatha.count;
+            } else {
+                elements.selectedGatha.textContent = stepData[0].gatha + ' - ' + stepData[0].count;
+            }
+        }
+
+        elements.cancelContinueBtn.addEventListener('click', () => {
+            elements.continueDialog.classList.remove('active');
+        });
+
+        elements.confirmContinueBtn.addEventListener('click', () => {
+            const step = parseInt(elements.stepSelect.value);
+            // Calculate start date based on selected step
+            const today = new Date();
+            const totalDaysToGoBack = (step - 1) * 9;
+
+            // Find the starting Monday by going back
+            let startDate = new Date(today);
+
+            // First, find the most recent Monday
+            while (!isMonday(startDate)) {
+                startDate.setDate(startDate.getDate() - 1);
+            }
+
+            // Then go back by the number of weeks needed for the selected step
+            const weeksToGoBack = Math.floor(totalDaysToGoBack / 7);
+            startDate.setDate(startDate.getDate() - (weeksToGoBack * 7));
+
+            // Make sure it's still a Monday
+            while (!isMonday(startDate)) {
+                startDate.setDate(startDate.getDate() - 1);
+            }
+
+            appState.startDate = startDate.toISOString().split('T')[0];
+            appState.currentStep = step;
+            appState.isStarted = true;
+
+            elements.continueDialog.classList.remove('active');
+            switchScreen('homeScreen');
+            updateUI();
+        });
+
+        // ===== Alert Dialog =====
+        elements.alertOkBtn.addEventListener('click', () => {
+            elements.alertDialog.classList.remove('active');
+        });
+
+        elements.confirmCancelBtn.addEventListener('click', () => {
+            elements.confirmDialog.classList.remove('active');
+        });
+
+        elements.vegetarianOkBtn.addEventListener('click', () => {
+            elements.vegetarianDialog.classList.remove('active');
+        });
+
+        // ===== Reset All =====
+        elements.resetAllBtn.addEventListener('click', () => {
+            showConfirm('အတည်ပြုရန်', 'အားလုံး ပြန်စမည်လား?', () => {
+                appState = {
+                    startDate: null,
+                    currentDay: 0,
+                    currentStep: 1,
+                    counter: 0,
+                    isStarted: false,
+                    fontSize: 16,
+                    vegetarianShown: false
+                };
+                updateUI();
+            });
+        });
+
+        // ===== Content Screen =====
+        elements.listItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const contentKey = item.dataset.content;
+                const content = contentData[contentKey];
+                if (content) {
+                    elements.contentTitle.textContent = content.title;
+                    elements.contentBody.textContent = content.content;
+                    elements.contentBody.style.fontSize = appState.fontSize + 'px';
+                    switchScreen('contentScreen');
+                }
+            });
+        });
+
+        elements.backBtn.addEventListener('click', () => {
+            switchScreen('prayerListScreen');
+        });
+
+        elements.fontSizeBtn.addEventListener('click', () => {
+            appState.fontSize += 2;
+            if (appState.fontSize > 24) appState.fontSize = 14;
+            elements.contentBody.style.fontSize = appState.fontSize + 'px';
+        });
+
+        // ===== Close dialogs on overlay click =====
+        document.querySelectorAll('.dialog-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.classList.remove('active');
+                }
+            });
+        });
+
+        // ===== Initialize =====
+        updateUI();
+    </script>
+</body>
+</html>
+
