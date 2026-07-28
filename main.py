@@ -12,8 +12,8 @@ def scrape_results():
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
 
-        page.goto(URL, wait_until="networkidle")
-        page.wait_for_timeout(5000)
+        page.goto(URL, wait_until="domcontentloaded") # networkidle အစား domcontentloaded သုံးကြည့်ပါ
+page.wait_for_timeout(10000) # 5 စက္ကန့်အစား 10 စက္ကန့်စောင့်ပါ
 
         html = page.content()
         browser.close()
