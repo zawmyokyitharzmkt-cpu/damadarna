@@ -4,37 +4,93 @@ import re
 
 app = Flask(__name__)
 
-URL = "https://www.777bigwingame.app/#/"
+URL = "https://www.777bigwingame.app/"
 
 def get_number_from_hash(hash_string):
-    """
-    Hash string (ဥပမာ - '...431bb') ထဲက နောက်ဆုံးဂဏန်းကို ထုတ်ယူမယ်
-    """
-    # Regular Expression နဲ့ နောက်ဆုံး ဂဏန်း (0-9) ကို ရှာမယ်
-    # \d က ဂဏန်းကို ဆိုလိုတာ၊ $ က အဆုံးကို ဆိုလိုတာ
     match = re.search(r'(\d)(?=[^0-9]*$)', hash_string)
-    
     if match:
         return int(match.group(1))
     return None
 
 def convert_to_big_small(last_digit):
-    """
-    နောက်ဆုံးဂဏန်းကို Big/Small အဖြစ် ပြောင်းမယ်
-    """
     if last_digit is None:
         return "Unknown"
     elif 0 <= last_digit <= 4:
         return "Small"
-    else: # 5, 6, 7, 8, 9
+    else:
         return "Big"
 
 def scrape_hash_history():
-    """
-    Playwright နဲ့ Website ကို Load ပြီး Hash တွေကို ဖမ်းယူမယ်
-    """
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
+        # Bot လို့မထင်အောင် User-Agent ထည့်မယ်
+        page = browser.new_page(user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
+        
+        page.goto(URL, wait_until="domcontentloaded")
+        page.wait_for_timeout(5000)
+        
+        html = page.content()
+        browser.close()
+
+    # HTML ထဲက Hash တွေကို ရှာမယ်
+    hash_pattern = r'Hash:\s*([a-fA-F0-9]+)'
+    found_hashes = re.findall(hash_pattern, html)
+
+    history = []
+    for h in found_hashes:
+        last_digit = get_number_from_hash(h)
+        if last_digit is not None:
+            result = convert_to_big_small(last_digit)
+            history.append(result)
+
+    return history
+
+def calculate_prediction(history):
+    if not history or len(history) < 2:
+        return "Data မလုံလောက်သေးပါ", 0
+
+    last_result = history[-1]
+    
+    count = 1
+    for i in range(len(history)-2, -1, -1):
+        if history[i] == last_result:
+            count += 1
+        else:
+            break
+
+    prediction = ""
+    
+    if last_result == "Small":
+        if count == 2:
+            prediction = "Big"
+        elif count == 3:
+            prediction = "Small"
+        else:
+            prediction = "Big"
+    elif last_result == "Big":
+        if count == 2:
+            prediction = "Small"
+        elif count == 3:
+            prediction = "Big"
+        else:
+            prediction = "Small"
+
+    return prediction, count
+
+@app.route('/predict', methods=['GET'])
+def predict_api():
+    history = scrape_hash_history()
+    prediction, streak = calculate_prediction(history)
+    
+    return jsonify({
+        "history": history,
+        "latest": history[-1] if history else None,
+        "streak": streak,
+        "prediction": prediction
+    })
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=10000)        browser = p.chromium.launch(headless=True)
         # Website က Bot လို့ မထင်အောင် User-Agent ထည့်မယ်
 page = browser.new_page(user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36")
 
