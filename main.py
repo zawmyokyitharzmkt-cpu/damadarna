@@ -1,89 +1,127 @@
 from flask import Flask, jsonify
 from playwright.sync_api import sync_playwright
-from bs4 import BeautifulSoup
+import re
 
 app = Flask(__name__)
 
-URL = "https://www.6win575.com/#/home/AllLotteryGames/WinGo?id=1"
+URL = "https://www.777bigwingame.app/#/home/AllLotteryGames/WinTrx?id=4"
 
+def get_number_from_hash(hash_string):
+    """
+    Hash string (ဥပမာ - '...431bb') ထဲက နောက်ဆုံးဂဏန်းကို ထုတ်ယူမယ်
+    """
+    # Regular Expression နဲ့ နောက်ဆုံး ဂဏန်း (0-9) ကို ရှာမယ်
+    # \d က ဂဏန်းကို ဆိုလိုတာ၊ $ က အဆုံးကို ဆိုလိုတာ
+    match = re.search(r'(\d)(?=[^0-9]*$)', hash_string)
+    
+    if match:
+        return int(match.group(1))
+    return None
 
-def scrape_results():
+def convert_to_big_small(last_digit):
+    """
+    နောက်ဆုံးဂဏန်းကို Big/Small အဖြစ် ပြောင်းမယ်
+    """
+    if last_digit is None:
+        return "Unknown"
+    elif 0 <= last_digit <= 4:
+        return "Small"
+    else: # 5, 6, 7, 8, 9
+        return "Big"
+
+def scrape_hash_history():
+    """
+    Playwright နဲ့ Website ကို Load ပြီး Hash တွေကို ဖမ်းယူမယ်
+    """
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
 
-        page.goto(URL, wait_until="domcontentloaded") # networkidle အစား domcontentloaded သုံးကြည့်ပါ
-page.wait_for_timeout(10000) # 5 စက္ကန့်အစား 10 စက္ကန့်စောင့်ပါ
+        # Website ကို သွားပါ
+        page.goto(URL, wait_until="domcontentloaded")
+        page.wait_for_timeout(5000) # Data တွေ Load ဖို့ စောင့်ပါ
 
+        # Page အပြည့်အစုံ HTML ကို ယူမယ်
         html = page.content()
         browser.close()
 
-    soup = BeautifulSoup(html, "html.parser")
+    # ==========================================
+    # ★★★ HTML ထဲက Hash ကို ရှာဖွေခြင်း ★★★
+    # ==========================================
+    # ပုံထဲကအတိုင်း Hash တွေက ဒီပုံစံမျိုး ရှိနေတယ်လို့ ယူဆပါတယ်။
+    # ဒီ Regular Expression က 'Hash:' ဆိုတဲ့စာကြောင်းနောက်က Hash ကို ဖမ်းပါတယ်။
+    # (အကယ်၍ HTML ထဲမှာ ဒီပုံစံနဲ့ မတွေ့ခဲ့ရင် Code ကို ပြင်ရပါမယ်။)
+    
+    hash_pattern = r'Hash:\s*([a-fA-F0-9]+)'
+    found_hashes = re.findall(hash_pattern, html)
 
-    results = []
+    # History (အကြီးအသေး အစီအစဉ်) ကို ဆောက်မယ်
+    history = []
+    for h in found_hashes:
+        last_digit = get_number_from_hash(h)
+        if last_digit is not None:
+            result = convert_to_big_small(last_digit)
+            history.append(result)
 
-    # Example selector (Change according to website)
-    for item in soup.select(".history-item"):
-        txt = item.get_text(" ", strip=True)
+    return history
 
-        if "Big" in txt:
-            results.append("Big")
-        elif "Small" in txt:
-            results.append("Small")
+def calculate_prediction(history):
+    """
+    သင့် Formula အတိုင်း ခန့်မှန်းခြင်း
+    """
+    if not history or len(history) < 2:
+        return "Data မလုံလောက်သေးပါ", 0
 
-    return results
-
-
-def predict(history):
-    if not history:
-        return None
-
-    last = history[-1]
-
+    last_result = history[-1]
+    
+    # နောက်ဆုံး Result က ဘယ်နှခါ ဆက်လာလဲ ရေတွက်မယ်
     count = 1
     for i in range(len(history)-2, -1, -1):
-        if history[i] == last:
+        if history[i] == last_result:
             count += 1
         else:
             break
 
-    if last == "Big":
-        if count in [1, 2]:
-            return "Small"
+    prediction = ""
+    
+    # ★★★ သင့် FORMULA (Hash ဂဏန်းကိုကြည့်ပြီး) ★★★
+    if last_result == "Small":
+        # အသေး ၂ ခါ ဆက်လာရင် အကြီးထိုး
+        if count == 2:
+            prediction = "Big"
+        # အသေး ၃ ခါ ဆက်လာရင် အသေးဆက်ထိုး
+        elif count == 3:
+            prediction = "Small"
         else:
-            return "Big"
+            prediction = "Big" # Default (အသေး 1 ခါပဲရှိသေးရင် အကြီးပြန်ထိုး)
 
-    if last == "Small":
-        if count in [1, 2]:
-            return "Big"
+    elif last_result == "Big":
+        # အကြီး ၂ ခါ ဆက်လာရင် အသေးထိုး
+        if count == 2:
+            prediction = "Small"
+        # အကြီး ၃ ခါ ဆက်လာရင် အကြီးဆက်ထိုး
+        elif count == 3:
+            prediction = "Big"
         else:
-            return "Small"
+            prediction = "Small" # Default
 
-    return None
+    return prediction, count
 
+@app.route('/predict', methods=['GET'])
+def predict_api():
+    # 1. Web မှ Hash နဲ့ History ယူမယ်
+    history = scrape_hash_history()
+    
+    # 2. Formula အတိုင်း တွက်မယ်
+    prediction, streak = calculate_prediction(history)
 
-@app.route("/predict")
-def api():
-
-    history = scrape_results()
-
-    prediction = predict(history)
-
+    # 3. JSON Result ပြန်ပို့မယ်
     return jsonify({
-        "history": history,
-        "last": history[-1] if history else None,
-        "streak": (
-            len(history)
-            - next(
-                (i for i in range(len(history)-1, -1, -1)
-                 if history[i] != history[-1]),
-                -1
-            )
-            - 1
-        ) if history else 0,
-        "prediction": prediction
+        "history": history,        # အရင်က ရလဒ်တွေ (ဥပမာ: ["Small", "Big", "Small"])
+        "latest": history[-1] if history else None,
+        "streak": streak,          # နောက်ဆုံးရလဒ် ဘယ်နှခါ ဆက်လာလဲ
+        "prediction": prediction   # သင့် Formula အရ ခန့်မှန်းချက်
     })
 
-
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=10000)
