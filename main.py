@@ -4,7 +4,7 @@ import re
 
 app = Flask(__name__)
 
-URL = "https://www.777bigwingame.app/#/home/AllLotteryGames/WinTrx?id=4"
+URL = "https://www.777bigwingame.app/#/"
 
 def get_number_from_hash(hash_string):
     """
