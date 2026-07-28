@@ -15,15 +15,13 @@ def get_number_from_hash(hash_string):
 def convert_to_big_small(last_digit):
     if last_digit is None:
         return "Unknown"
-    elif 0 <= last_digit <= 4:
+    if 0 <= last_digit <= 4:
         return "Small"
-    else:
-        return "Big"
+    return "Big"
 
 def scrape_hash_history():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
-        # Bot လို့မထင်အောင် User-Agent ထည့်မယ်
         page = browser.new_page(user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
         
         page.goto(URL, wait_until="domcontentloaded")
@@ -32,9 +30,64 @@ def scrape_hash_history():
         html = page.content()
         browser.close()
 
-    # HTML ထဲက Hash တွေကို ရှာမယ်
     hash_pattern = r'Hash:\s*([a-fA-F0-9]+)'
     found_hashes = re.findall(hash_pattern, html)
+
+    history = []
+    for h in found_hashes:
+        last_digit = get_number_from_hash(h)
+        if last_digit is not None:
+            result = convert_to_big_small(last_digit)
+            history.append(result)
+
+    return history
+
+def calculate_prediction(history):
+    if not history or len(history) < 2:
+        return "Data မလုံလောက်သေးပါ", 0
+
+    last_result = history[-1]
+    
+    count = 1
+    for i in range(len(history)-2, -1, -1):
+        if history[i] == last_result:
+            count += 1
+        else:
+            break
+
+    prediction = ""
+    
+    if last_result == "Small":
+        if count == 2:
+            prediction = "Big"
+        elif count == 3:
+            prediction = "Small"
+        else:
+            prediction = "Big"
+    elif last_result == "Big":
+        if count == 2:
+            prediction = "Small"
+        elif count == 3:
+            prediction = "Big"
+        else:
+            prediction = "Small"
+
+    return prediction, count
+
+@app.route('/predict')
+def predict_api():
+    history = scrape_hash_history()
+    prediction, streak = calculate_prediction(history)
+    
+    return jsonify({
+        "history": history,
+        "latest": history[-1] if history else None,
+        "streak": streak,
+        "prediction": prediction
+    })
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=10000)    found_hashes = re.findall(hash_pattern, html)
 
     history = []
     for h in found_hashes:
