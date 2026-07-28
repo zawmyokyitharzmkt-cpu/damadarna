@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
-URL = "https://www.777bigwingame.app/#/home/AllLotteryGames/WinTrx?id=4"
+URL = "https://www.6win575.com/#/home/AllLotteryGames/WinGo?id=1"
 
 
 def scrape_results():
