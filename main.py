@@ -35,7 +35,8 @@ def scrape_hash_history():
     """
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
-        page = browser.new_page()
+        # Website က Bot လို့ မထင်အောင် User-Agent ထည့်မယ်
+page = browser.new_page(user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36")
 
         # Website ကို သွားပါ
         page.goto(URL, wait_until="domcontentloaded")
